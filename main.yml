@@ -1,8 +1,7 @@
 ---
-- hosts: macmini
+- name: Configure hosts.
+  hosts: macmini
   gather_facts: yes
-  name: Configure host.
-  hosts: all
 
   vars_files:
     - default.config.yml
