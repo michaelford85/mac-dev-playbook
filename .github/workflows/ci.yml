@@ -67,10 +67,10 @@ jobs:
       - name: Test the playbook's syntax.
         run: ansible-playbook main.yml --syntax-check
 
-      # - name: Test the playbook.
-      #   run: ansible-playbook main.yml
-      #   env:
-      #     ANSIBLE_FORCE_COLOR: '1'
+      - name: Test the playbook.
+        run: ansible-playbook main.yml
+        env:
+          ANSIBLE_FORCE_COLOR: '1'
 
       - name: Idempotence check.
         run: |
