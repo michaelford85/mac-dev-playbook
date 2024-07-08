@@ -13,7 +13,7 @@ This playbook installs and configures most of the software I use on my Mac for w
 
      1. Run the following command to add Python 3 to your $PATH: `export PATH="$HOME/Library/Python/3.9/bin:/opt/homebrew/bin:$PATH"`
      2. Upgrade Pip: `sudo pip3 install --upgrade pip`
-     3. Install Ansible: `pip3 install ansible`
+     3. Install Ansible: `pip3 install ansible-core`
 
   3. Clone or download this repository to your local drive.
   4. Run `ansible-galaxy install -r requirements.yml` inside this directory to install required Ansible roles.
@@ -64,80 +64,16 @@ mas_installed_apps:
   - { id: 557168941, name: "Tweetbot" }
   - { id: 497799835, name: "Xcode" }
 
-composer_packages:
-  - name: hirak/prestissimo
-  - name: drush/drush
-    version: '^8.1'
-
-gem_packages:
-  - name: bundler
-    state: latest
-
-npm_packages:
-  - name: webpack
-
-pip_packages:
-  - name: mkdocs
-
-configure_dock: true
-dockitems_remove:
-  - Launchpad
-  - TV
-dockitems_persist:
-  - name: "Sublime Text"
-    path: "/Applications/Sublime Text.app/"
-    pos: 5
+dock_dockitems:
+  - label: "Launchpad"
+    path: "/Applications/Launchpad.app/"
+    action: add
+    position: 1 
 ```
 
 Any variable can be overridden in `config.yml`; see the supporting roles' documentation for a complete list of available variables.
 
-## Included Applications / Configuration (Default)
-
-Applications (installed with Homebrew Cask):
-
-  - [ChromeDriver](https://sites.google.com/chromium.org/driver/)
-  - [Docker](https://www.docker.com/)
-  - [Dropbox](https://www.dropbox.com/)
-  - [Firefox](https://www.mozilla.org/en-US/firefox/new/)
-  - [Google Chrome](https://www.google.com/chrome/)
-  - [Handbrake](https://handbrake.fr/)
-  - [Homebrew](http://brew.sh/)
-  - [LICEcap](http://www.cockos.com/licecap/)
-  - [nvALT](http://brettterpstra.com/projects/nvalt/)
-  - [Sequel Ace](https://sequel-ace.com) (MySQL client)
-  - [Slack](https://slack.com/)
-  - [Sublime Text](https://www.sublimetext.com/)
-  - [Transmit](https://panic.com/transmit/) (S/FTP client)
-
-Packages (installed with Homebrew):
-
-  - autoconf
-  - bash-completion
-  - doxygen
-  - gettext
-  - gifsicle
-  - git
-  - gh
-  - go
-  - gpg
-  - httpie
-  - iperf
-  - libevent
-  - sqlite
-  - nmap
-  - node
-  - nvm
-  - php
-  - ssh-copy-id
-  - cowsay
-  - readline
-  - openssl
-  - pv
-  - wget
-  - wrk
-  - zsh-history-substring-search
-
-My [dotfiles](https://github.com/geerlingguy/dotfiles) are also installed into the current user's home directory, including the `.osx` dotfile for configuring many aspects of macOS for better performance and ease of use. You can disable dotfiles management by setting `configure_dotfiles: no` in your configuration.
+My [dotfiles](https://github.com/michaelford85/dotfiles) are also installed into the current user's home directory, including the `.osx` dotfile for configuring many aspects of macOS for better performance and ease of use. You can disable dotfiles management by setting `configure_dotfiles: no` in your configuration.
 
 Finally, there are a few other preferences and settings added on for various apps and services.
 
@@ -145,7 +81,7 @@ Finally, there are a few other preferences and settings added on for various app
 
 Since I've used this playbook to set up something like 20 different Macs, I decided to write up a full 100% from-scratch install for my own reference (everyone's particular install will be slightly different).
 
-You can see my full from-scratch setup document here: [full-mac-setup.md](full-mac-setup.md).
+You can see my full from-scratch setup document here: [full-mac-setup-mford.md](full-mac-setup-mford.md).
 
 ## Testing the Playbook
 
