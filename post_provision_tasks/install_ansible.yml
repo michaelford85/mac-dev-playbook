@@ -19,4 +19,3 @@
     version: "{{ ansible_version_mac }}"
     virtualenv: ~/venvs/ansible
     virtualenv_command: python3 -m venv
-    # executable: ~/venvs/ansible/bin/pip

@@ -1,7 +1,7 @@
 ---
 - name: Configure hosts.
   hosts: all
-  gather_facts: yes
+  gather_facts: true
 
   vars_files:
     - default.config.yml
@@ -20,7 +20,7 @@
       copy:
         content: ""
         dest: "/Users/{{ ansible_user }}/.zprofile"
-        force: no
+        force: false
 
     - name: Ensure brew path in ~/.zprofile
       lineinfile:
