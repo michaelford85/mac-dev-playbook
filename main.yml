@@ -1,8 +1,14 @@
 ---
-- hosts: all
+- hosts: macmini
+  gather_facts: yes
+  name: Configure host.
+  hosts: all
 
   vars_files:
     - default.config.yml
+
+  environment:
+    PATH: "/opt/homebrew/bin:/opt/homebrew/sbin:{{ ansible_env.PATH }}"
 
   pre_tasks:
     - name: Include playbook configuration.
@@ -11,9 +17,31 @@
         - "{{ playbook_dir }}/config.yml"
       tags: ['always']
 
+    - name: Ensure .zprofile exists
+      copy:
+        content: ""
+        dest: "/Users/{{ ansible_user }}/.zprofile"
+        force: no
+
+    - name: Ensure brew path in ~/.zprofile
+      lineinfile:
+        state: present
+        path: "/Users/{{ ansible_user }}/.zprofile"
+        line: eval "$({{ (ansible_machine == 'arm64') | ternary('/opt/homebrew', '/usr/local') }}/bin/brew shellenv)"
+      tags: ['homebrew']
+
+    - name: Ensure dock path in ~/.zprofile
+      lineinfile:
+        state: present
+        path: "/Users/{{ ansible_user }}/.zprofile"
+        line: eval "$({{ (ansible_machine == 'arm64') | ternary('/opt/homebrew', '/usr/local') }}/bin/dockutil shellenv)"
+      tags: ['dock']
+
   roles:
     - role: elliotweiser.osx-command-line-tools
-    - role: geerlingguy.mac.homebrew
+    # - role: geerlingguy.mac.homebrew
+    #   tags: ['homebrew']
+    - role: homebrew
       tags: ['homebrew']
     - role: geerlingguy.dotfiles
       when: configure_dotfiles
@@ -23,7 +51,7 @@
       tags: ['mas']
       environment:
         PATH: "/opt/homebrew/bin/:{{ ansible_env.PATH }}"
-    - role: geerlingguy.mac.dock
+    - role: ansible-role-dock
       when: configure_dock
       tags: ['dock']
       environment:
@@ -51,10 +79,11 @@
     #   when: configure_sublime
     #   tags: ['sublime-text']
 
-    - block:
+    - name: Run post-provision task files in a block.
+      tags: ['post']
+      block:
         - name: Run configured post-provision ansible task files.
           include_tasks: "{{ outer_item }}"
           loop_control:
             loop_var: outer_item
-          with_fileglob: "{{ post_provision_tasks|default(omit) }}"
-      tags: ['post']
+          with_fileglob: "{{ post_provision_tasks | default(omit) }}"
