@@ -182,12 +182,12 @@ dock_dockutil_path: /opt/homebrew/bin/dockutil
 dock_dockitems_erase_all: true
 
 dock_dockutil_install: false
- 
+
 dock_dockitems:
   - label: "Launchpad"
     path: "/Applications/Launchpad.app/"
     action: add
-    position: 1 
+    position: 1
   - label: "Spotify"
     path: "/Applications/Spotify.app/"
     action: add
@@ -275,7 +275,7 @@ dock_dockitems:
   - label: "reMarkable"
     path: "/Applications/reMarkable.app/"
     action: add
-    position: 23   
+    position: 23
   - label: "Calculator"
     path: "/Applications/Calculator.app/"
     action: add
