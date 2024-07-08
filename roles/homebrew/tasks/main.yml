@@ -12,8 +12,8 @@
 - name: Fail if Homebrew is not installed
   ansible.builtin.fail:
     msg: >
-      Homebrew is not installed. Exiting playbook. Run the following command on your target Mac: 
-      $ /bin/bash -c \"$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)\"
+      Homebrew is not installed. Exiting playbook. Run the following command on your target Mac:
+       $ /bin/bash -c \"$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)\"
   when: brew_path.rc != 0
 
 - block:
@@ -22,14 +22,14 @@
     lineinfile:
       path: "{{ ansible_env.HOME }}/.zshrc"
       line: 'export PATH="/opt/homebrew/bin:$PATH"'
-      create: yes
+      create: true
     when: ansible_env.SHELL.endswith('zsh')
 
   - name: Add /opt/homebrew/bin to PATH in .bash_profile
     lineinfile:
       path: "{{ ansible_env.HOME }}/.bash_profile"
       line: 'export PATH="/opt/homebrew/bin:$PATH"'
-      create: yes
+      create: true
     when: ansible_env.SHELL.endswith('bash')
 
   - name: Add /opt/homebrew/bin to system-wide PATH
@@ -37,7 +37,7 @@
       path: /etc/paths
       line: '/opt/homebrew/bin'
       state: present
-    become: yes
+    become: true
 
   - name: Install Homebrew casks
     community.general.homebrew_cask:
@@ -46,7 +46,7 @@
       sudo_password: "{{ ansible_become_password | default(omit) }}"
       accept_external_apps: "{{ homebrew_cask_accept_external_apps }}"
     with_items: "{{ homebrew_cask_apps }}"
-    become: yes
+    become: true
     become_user: "{{ ansible_user_id }}"
 
   - name: Install Homebrew formulae
@@ -54,7 +54,7 @@
       name: "{{ item }}"
       state: present
     with_items: "{{ homebrew_installed_packages }}"
-    become: yes
+    become: true
     become_user: "{{ ansible_user_id }}"
 
   - name: Remove specified Homebrew casks
@@ -62,7 +62,7 @@
       name: "{{ item }}"
       state: absent
     with_items: "{{ homebrew_cask_uninstalled_apps }}"
-    become: yes
+    become: true
     become_user: "{{ ansible_user_id }}"
 
   - name: Remove specified Homebrew formulae
@@ -70,7 +70,7 @@
       name: "{{ item }}"
       state: absent
     with_items: "{{ homebrew_uninstalled_packages }}"
-    become: yes
+    become: true
     become_user: "{{ ansible_user_id }}"
 
   when: brew_path.rc == 0

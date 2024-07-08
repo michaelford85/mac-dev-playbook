@@ -1,10 +1,11 @@
+---
 configure_dotfiles: true
 configure_dock: true
 configure_sudoers: true
 configure_terminal: false
 configure_osx: false
 
-#The version of ansible to install in the ~/venvs/absible virtual environment on the destination mac.
+# The version of ansible to install in the ~/venvs/absible virtual environment on the destination mac.
 # Use the following to see what the latest available version is:
 # $pip3 index versions ansible-core
 ansible_version_mac: 2.17.1
@@ -285,4 +286,3 @@ post_provision_tasks:
   - post_provision_tasks/create_git_environment.yml
   - post_provision_tasks/create_kube_directory.yml
   - post_provision_tasks/install_ansible.yml
-
