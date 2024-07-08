@@ -19,20 +19,20 @@
     - name: Ensure .zprofile exists
       copy:
         content: ""
-        dest: "/Users/{{ ansible_facts['ansible_env']['USER'] }}/.zprofile"
+        dest: "/Users/{{ ansible_user_id }}/.zprofile"
         force: false
 
     - name: Ensure brew path in ~/.zprofile
       lineinfile:
         state: present
-        path: "/Users/{{ ansible_facts['ansible_env']['USER'] }}/.zprofile"
+        path: "/Users/{{ ansible_user_id }}/.zprofile"
         line: eval "$({{ (ansible_machine == 'arm64') | ternary('/opt/homebrew', '/usr/local') }}/bin/brew shellenv)"
       tags: ['homebrew']
 
     - name: Ensure dock path in ~/.zprofile
       lineinfile:
         state: present
-        path: "/Users/{{ ansible_facts['ansible_env']['USER'] }}/.zprofile"
+        path: "/Users/{{ ansible_user_id }}/.zprofile"
         line: eval "$({{ (ansible_machine == 'arm64') | ternary('/opt/homebrew', '/usr/local') }}/bin/dockutil shellenv)"
       tags: ['dock']
 
