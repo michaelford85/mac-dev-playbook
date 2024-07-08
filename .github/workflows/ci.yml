@@ -64,6 +64,14 @@ jobs:
           cp tests/config.yml ./config.yml
           ansible-galaxy install -r requirements.yml
 
+      - name: Install Homebrew
+        run: |
+          /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+      
+      - name: Verify Homebrew installation
+        run: |
+          brew --version
+
       - name: Test the playbook's syntax.
         run: ansible-playbook main.yml --syntax-check
 
