@@ -17,11 +17,11 @@
       tags: ['always']
 
     - name: Ensure .zprofile exists
-      - name: Ensure .zprofile exists
-        ansible.builtin.copy:
-          content: ""
-          dest: "/Users/{{ ansible_user_id }}/.zprofile"
-          force: false    
+      ansible.builtin.copy:
+        content: ""
+        dest: "/Users/{{ ansible_user_id }}/.zprofile"
+        force: false    
+        
     - name: Ensure brew path in ~/.zprofile
       ansible.builtin.lineinfile:
         state: present
