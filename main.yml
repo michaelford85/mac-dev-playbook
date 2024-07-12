@@ -17,20 +17,20 @@
       tags: ['always']
 
     - name: Ensure .zprofile exists
-      copy:
-        content: ""
-        dest: "/Users/{{ ansible_user_id }}/.zprofile"
-        force: false
-
+      - name: Ensure .zprofile exists
+        ansible.builtin.copy:
+          content: ""
+          dest: "/Users/{{ ansible_user_id }}/.zprofile"
+          force: false    
     - name: Ensure brew path in ~/.zprofile
-      lineinfile:
+      ansible.builtin.lineinfile:
         state: present
         path: "/Users/{{ ansible_user_id }}/.zprofile"
         line: eval "$({{ (ansible_machine == 'arm64') | ternary('/opt/homebrew', '/usr/local') }}/bin/brew shellenv)"
       tags: ['homebrew']
 
     - name: Ensure dock path in ~/.zprofile
-      lineinfile:
+      ansible.builtin.lineinfile:
         state: present
         path: "/Users/{{ ansible_user_id }}/.zprofile"
         line: eval "$({{ (ansible_machine == 'arm64') | ternary('/opt/homebrew', '/usr/local') }}/bin/dockutil shellenv)"
@@ -57,24 +57,24 @@
         PATH: "/usr/local/bin/:{{ ansible_env.PATH }}"
 
   tasks:
-    - debug:
+    - ansible.builtin.debug:
         msg: "This playbook is running properly."
-    - import_tasks: tasks/sudoers.yml
+    - ansible.builtin.import_tasks: tasks/sudoers.yml
       when: configure_sudoers
       tags: ['sudoers']
 
-    # - import_tasks: tasks/terminal.yml
+    # - ansible.builtin.import_tasks: tasks/terminal.yml
     #   when: configure_terminal
     #   tags: ['terminal']
 
-    # - import_tasks: tasks/osx.yml
+    # - ansible.builtin.import_tasks: tasks/osx.yml
     #   when: configure_osx
     #   tags: ['osx']
 
-    # - import_tasks: tasks/extra-packages.yml
+    # - ansible.builtin.import_tasks: tasks/extra-packages.yml
     #   tags: ['extra-packages']
 
-    # - import_tasks: tasks/sublime-text.yml
+    # - ansible.builtin.import_tasks: tasks/sublime-text.yml
     #   when: configure_sublime
     #   tags: ['sublime-text']
 
@@ -82,7 +82,7 @@
       tags: ['post']
       block:
         - name: Run configured post-provision ansible task files.
-          include_tasks: "{{ outer_item }}"
+          ansible.builtin.include_tasks: "{{ outer_item }}"
           loop_control:
             loop_var: outer_item
           with_fileglob: "{{ post_provision_tasks | default(omit) }}"
