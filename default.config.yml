@@ -1,30 +1,88 @@
 ---
+# This variable determines whether dotfiles should be configured.
+# Set it to `true` if you want to configure dotfiles, or `false` otherwise.
 configure_dotfiles: true
+
+# This variable is used to configure the dock.
 configure_dock: true
+
+# This variable determines whether to configure sudoers.
+# Set it to `true` if you want to configure sudoers, or `false` otherwise.
 configure_sudoers: true
+
+# Variable: configure_terminal
+# Description: Specifies whether to configure the terminal settings.
+#   If set to `true`, the terminal settings will be configured.
+#   If set to `false`, the terminal settings will not be configured.
 configure_terminal: false
-configure_osx: false
+
+# The local path where the Dropbox folder is located.
+# This variable specifies the path to the Dropbox folder on the local machine.
+# It uses the `ansible_user_id` variable to dynamically construct the path based on the current user.
+dropbox_local_path: "/Users/{{ ansible_user_id }}/Library/CloudStorage/Dropbox"
+
+# The `home_path` variable specifies the path to the home directory of the user running the Ansible playbook.
+home_path: "/Users/{{ ansible_user_id }}"
+
 
 # The version of ansible to install in the ~/venvs/absible virtual environment on the destination mac.
 # Use the following to see what the latest available version is:
 # $pip3 index versions ansible-core
 ansible_version_mac: 2.17.1
 
+# Description: The password used for privilege escalation when running Ansible tasks.
+#              This password is required when the `ansible_become` option is set to `true`.
+#              It should be a strong and secure password to ensure the safety of the system.
+# ansible_become_password: abc123
+
+# The `sudoers_custom_config` variable is used to specify custom configuration for the sudoers file.
+# This variable should contain the contents of the custom configuration as a string.
 sudoers_custom_config: |
  # Allow users in admin group to use sudo with no password.
  %admin    ALL = (ALL) ALL
 
+# The variable `homebrew_cask_appdir` specifies the directory where Homebrew Cask applications will be installed on macOS.
+# By default, it is set to `/Applications`.
 homebrew_cask_appdir: /Applications
+
+# Variable: homebrew_cask_accept_external_apps
+# Description: Determines whether external apps are accepted when installing Homebrew casks.
+# Default Value: false
 homebrew_cask_accept_external_apps: false
 
+# Variable: homebrew_cask_uninstalled_apps
+#
+# Description:
+# This variable is used to specify a list of Homebrew Cask applications that should be uninstalled.
+#
+# Example:
+# homebrew_cask_uninstalled_apps:
+#   - google-chrome
+#   - slack
+#   - visual-studio-code
+#
+# Note:
+# Make sure to provide the exact names of the applications as they are listed in Homebrew Cask.
 homebrew_cask_uninstalled_apps:
   - authy
   - inkscape
   - gather
   - pgadmin4
 
+# Variable: homebrew_uninstalled_packages
+# Description: This variable is used to store a list of Homebrew packages should be uninstalled.
+#              It is an empty list by default.
 homebrew_uninstalled_packages: []
 
+# Variable: homebrew_installed_packages
+# Description: This variable is used to specify a list of Homebrew packages that should be installed on the system.
+#              Homebrew is a package manager for macOS that allows you to easily install and manage software packages.
+#              By specifying a list of packages in this variable, you can ensure that these packages are installed on the system during the playbook execution.
+#              Each package should be specified as a separate item in the list.
+# Example: homebrew_installed_packages:
+#            - git
+#            - python
+#            - node
 homebrew_installed_packages:
   - augeas
   - awscli
@@ -110,10 +168,21 @@ homebrew_installed_packages:
   - xz
   - zstd
 
+# Variable: homebrew_taps
+# Description: A list of Homebrew taps to be installed.
+# Default value: []
 homebrew_taps: []
   # - homebrew/core
   # - homebrew/cask
 
+# Variable: homebrew_cask_apps
+# Description: This variable is used to specify a list of Homebrew Cask applications to be installed.
+#              Homebrew Cask is a package manager for macOS that allows you to install applications
+#              from the command line. This variable should be a list of application names.
+# Example: homebrew_cask_apps:
+#            - google-chrome
+#            - visual-studio-code
+#            - slack
 homebrew_cask_apps:
   - 1password
   - adobe-acrobat-pro
@@ -153,6 +222,13 @@ homebrew_cask_apps:
   - whatsapp
   - zoom
 
+# Variable: mas_installed_apps
+# Description: This variable stores a list of Mac App Store apps to be installed.
+#              Each app is represented by its unique identifier.
+# Example: 
+#   - 497799835  # Xcode
+#   - 803453959  # Slack
+#   - 409183694  # Keynote
 mas_installed_apps:
   - { id: 302584613, name: "Kindle" }
   - { id: 1295203466, name: "Microsoft Remote Desktop" }
@@ -164,14 +240,15 @@ mas_installed_apps:
   - { id: 1230249825, name: "VMware Remote Console" }
   - { id: 1451685025, name: "WireGuard" }
 
+# This variable controls whether all Mac App Store apps should be upgraded.
 mas_upgrade_all_apps: true
 
+# The URL of the repository containing the dotfiles.
 dotfiles_repo: "https://github.com/michaelford85/dotfiles.git"
 dotfiles_repo_version: master
 dotfiles_repo_accept_hostkey: false
-dotfiles_repo_local_destination: "~/Documents/dotfiles"
-
-dotfiles_home: "~"
+dotfiles_repo_local_destination: "/Users/{{ ansible_user_id }}/Documents/dotfiles"
+dotfiles_home: "/Users/{{ ansible_user_id }}"
 dotfiles_files:
   - .zshrc
   - .vimrc
@@ -183,6 +260,7 @@ dock_dockitems_erase_all: true
 
 dock_dockutil_install: false
 
+# The `dock_dockitems` variable represents the list of items to be displayed in the Dock.
 dock_dockitems:
   - label: "Launchpad"
     path: "/Applications/Launchpad.app/"

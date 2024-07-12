@@ -26,6 +26,10 @@ Before starting, I completed Apple's mandatory macOS setup wizard (creating a lo
     - `$ /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"`
   - Install the ansible collections and roles required:
     - `$ ansible-galaxy install -r <repository root>/requirements.yml`
+  - Specify the privilege escalation password for your target machines. You have several options:
+    - Make the playbook query you for the become password when running the main.yml file, with the argument `--ask-become-pass`
+    - Specify the `ansible_become_password` variable in the `config.yml` file.
+    - If you are running the playbook on multiple macs, and they have different passwords, you can set the inventory variable `ansible_become_pass`.
   - Make the following role tweaks:
     - **<repository root>/roles/geerlingguy.dotfiles/tasks/main.yml**:
       - For the task `Ensure dotfiles repository is cloned locally`, add `force: true` to the git module arguments.
@@ -65,8 +69,9 @@ Before starting, I completed Apple's mandatory macOS setup wizard (creating a lo
   - Install [Google Chat](https://chat.google.com/download/) from within Brave Browser
   - Install [VMWare Fusion Player](https://customerconnect.vmware.com/en/evalcenter?p=fusion-player-personal-13) (dmg file and licence are in DropBox)
 - Set up Dropbox and sync the following folders:
-  - `/Dropbox/apps/`
-  - `/Dropbox/My Documents/Macbook Ansible Restore/`
+  - `{{ dropbox_local_path }}/Dropbox/apps/`
+  - `{{ dropbox_local_path }}/Dropbox/My Documents/Macbook Ansible Restore/`
+    - Where `{{ dropbox_local_path }}` is the path to the Dropbox folder on the target machine, that you should also specify in the `config.yml` file.
 - Run the playbook remotely with `--skip-tags homebrew, post`.
   - `$ ansible-playbook main.yml  --skip-tags "homebrew,post"`
   - NOTE: The Dock may not show updates after this; in order to show the changes, run the following command in the Mac Terminal:

@@ -16,25 +16,25 @@
         - "{{ playbook_dir }}/config.yml"
       tags: ['always']
 
-    - name: Ensure .zprofile exists
-      ansible.builtin.copy:
-        content: ""
-        dest: "/Users/{{ ansible_user_id }}/.zprofile"
-        force: false    
+    # - name: Ensure .zprofile exists
+    #   ansible.builtin.copy:
+    #     content: ""
+    #     dest: "/Users/{{ ansible_user_id }}/.zprofile"
+    #     force: false    
         
-    - name: Ensure brew path in ~/.zprofile
-      ansible.builtin.lineinfile:
-        state: present
-        path: "/Users/{{ ansible_user_id }}/.zprofile"
-        line: eval "$({{ (ansible_machine == 'arm64') | ternary('/opt/homebrew', '/usr/local') }}/bin/brew shellenv)"
-      tags: ['homebrew']
+    # - name: Ensure brew path in ~/.zprofile
+    #   ansible.builtin.lineinfile:
+    #     state: present
+    #     path: "/Users/{{ ansible_user_id }}/.zprofile"
+    #     line: eval "$({{ (ansible_machine == 'arm64') | ternary('/opt/homebrew', '/usr/local') }}/bin/brew shellenv)"
+    #   tags: ['homebrew']
 
-    - name: Ensure dock path in ~/.zprofile
-      ansible.builtin.lineinfile:
-        state: present
-        path: "/Users/{{ ansible_user_id }}/.zprofile"
-        line: eval "$({{ (ansible_machine == 'arm64') | ternary('/opt/homebrew', '/usr/local') }}/bin/dockutil shellenv)"
-      tags: ['dock']
+    # - name: Ensure dock path in ~/.zprofile
+    #   ansible.builtin.lineinfile:
+    #     state: present
+    #     path: "/Users/{{ ansible_user_id }}/.zprofile"
+    #     line: eval "$({{ (ansible_machine == 'arm64') | ternary('/opt/homebrew', '/usr/local') }}/bin/dockutil shellenv)"
+    #   tags: ['dock']
 
   roles:
     - role: elliotweiser.osx-command-line-tools
@@ -42,6 +42,8 @@
     #   tags: ['homebrew']
     - role: homebrew
       tags: ['homebrew']
+      environment:
+        PATH: "/opt/homebrew/bin/:/usr/local/bin/:{{ ansible_env.PATH }}"
     - role: geerlingguy.dotfiles
       when: configure_dotfiles
       tags: ['dotfiles']
@@ -49,7 +51,7 @@
       when: mas_installed_apps or mas_installed_app_ids
       tags: ['mas']
       environment:
-        PATH: "/opt/homebrew/bin/:{{ ansible_env.PATH }}"
+        PATH: "/opt/homebrew/bin/:/usr/local/bin/:{{ ansible_env.PATH }}"
     - role: ansible-role-dock
       when: configure_dock
       tags: ['dock']

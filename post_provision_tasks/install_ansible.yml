@@ -1,21 +1,15 @@
 ---
 - name: Create venvs directory
   ansible.builtin.file:
-    path: ~/venvs
+    path: "{{ home_path }}/venvs"
     state: directory
 
-- name: Determine whether the ~/venvs/ansible directory exists
-  ansible.builtin.stat:
-    path: ~/venvs/ansible
-  register: ansible_directory
-
 - name: Create ansible Virtual Environment
-  command: python3 -m venv ~/venvs/ansible
-  when: not ansible_directory.stat.exists
+  ansible.builtin.shell:
+    cmd: "python3 -m venv {{ home_path }}/venvs/ansible"
 
 - name: Install Ansible in the virtual environment
-  pip:
+  ansible.builtin.pip:
     name: ansible-core
     version: "{{ ansible_version_mac }}"
-    virtualenv: ~/venvs/ansible
-    virtualenv_command: python3 -m venv
+    virtualenv: "{{ home_path }}/venvs/ansible"

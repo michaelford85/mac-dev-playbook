@@ -1,0 +1,39 @@
+
+# Task: Copy AWS VM SSH keys to ~/.ssh/
+# This task copies the AWS VM SSH keys from the specified source directory to the ~/.ssh/ directory on the target machine.
+# The keys are copied with the specified owner, group, and mode permissions.
+- name: Copy AWS VM SSH keys to ~/.ssh/
+  ansible.builtin.copy:
+    src: "{{ dropbox_local_path }}/My Documents/SSH Keys/AWS/{{ item }}"
+    remote_src: true
+    dest: "{{ home_path }}/.ssh/{{ item }}"
+    owner: "{{ ansible_user }}"
+    group: staff
+    mode: 0600
+  with_items:
+    - mford-useast-1-key.pem
+    - mford-useast-2-key.pem
+
+# Task: Copy GCP VM SSH keys to ~/.ssh/
+# This task copies the GCP VM SSH keys from the specified source directory to the ~/.ssh/ directory on the target machine.
+# The keys are copied with the specified owner, group, and mode permissions.
+- name: Copy GCP VM SSH keys to ~/.ssh/
+  ansible.builtin.copy:
+    src: "{{ dropbox_local_path }}/My Documents/SSH Keys/Github/michaelford85/michaelford85_github.pem"
+    remote_src: true
+    dest: "{{ home_path }}/.ssh/michaelford85_github.pem"
+    owner: "{{ ansible_user }}"
+    group: staff
+    mode: 0600
+
+# Task: Copy Home Lab SSH keys to ~/.ssh/
+# This task copies the Home Lab SSH keys from the specified source directory to the ~/.ssh/ directory on the target machine.
+# The keys are copied with the specified owner, group, and mode permissions.
+- name: Copy Home Lab SSH keys to ~/.ssh/
+  ansible.builtin.copy:
+    src: "{{ dropbox_local_path }}/My Documents/SSH Keys/Home Lab/fordlab.pem"
+    remote_src: true
+    dest: "{{ home_path }}/.ssh/fordlab.pem"
+    owner: "{{ ansible_user }}"
+    group: staff
+    mode: 0600
