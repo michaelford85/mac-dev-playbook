@@ -75,8 +75,13 @@ jobs:
       - name: Test the playbook's syntax.
         run: ansible-playbook main.yml --syntax-check
 
-      - name: Test the playbook.
-        run: ansible-playbook main.yml --tags "dotfiles, homebrew, dock"
+      - name: Test the playbook with homebrew tasks.
+        run: ansible-playbook main.yml --tags "homebrew"
+        env:
+          ANSIBLE_FORCE_COLOR: '1'
+
+      - name: Test the playbook with dotfiles and dock tasks.
+        run: ansible-playbook main.yml --tags "dotfiles, dock"
         env:
           ANSIBLE_FORCE_COLOR: '1'
 
