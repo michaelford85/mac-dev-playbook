@@ -119,6 +119,9 @@ Before starting, I completed Apple's mandatory macOS setup wizard (creating a lo
     - Tap to Click: `Enabled`
     - Tap with one finger
     - App Exposé: `Swipe Down with Four Fingers`
+  - Sound:
+    - Sound Effects:
+      - Play user interface sound effects: `Disabled`
   - Open at Login:
     - Open at Login:
       - AlDente.app (if a laptop)
