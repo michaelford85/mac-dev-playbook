@@ -1,6 +1,6 @@
 ---
 - name: Configure hosts.
-  hosts: all
+  hosts: macmini, macbook
   gather_facts: true
 
   vars_files:
