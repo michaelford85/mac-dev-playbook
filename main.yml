@@ -38,9 +38,7 @@
 
   roles:
     - role: elliotweiser.osx-command-line-tools
-    # - role: geerlingguy.mac.homebrew
-    #   tags: ['homebrew']
-    - role: homebrew
+    - role: geerlingguy.mac.homebrew
       tags: ['homebrew']
       environment:
         PATH: "/opt/homebrew/bin/:/usr/local/bin/:{{ ansible_env.PATH }}"
@@ -59,6 +57,48 @@
         PATH: "/usr/local/bin/:{{ ansible_env.PATH }}"
 
   tasks:
+    # Install host-specific Homebrew formulae
+    - name: Install Mac mini-only Homebrew formulae
+      community.general.homebrew:
+        name: "{{ item }}"
+        state: present
+      loop: "{{ homebrew_macmini_packages }}"
+      when: "'macmini' in group_names"
+      become: true
+      become_user: "{{ ansible_user_id }}"
+      tags: ['homebrew']
+
+    - name: Install MacBook-only Homebrew formulae
+      community.general.homebrew:
+        name: "{{ item }}"
+        state: present
+      loop: "{{ homebrew_macbook_packages }}"
+      when: "'macbook' in group_names"
+      become: true
+      become_user: "{{ ansible_user_id }}"
+      tags: ['homebrew']
+
+    # Install host-specific Homebrew casks
+    - name: Install Mac mini-only Homebrew casks
+      community.general.homebrew_cask:
+        name: "{{ item }}"
+        state: present
+      loop: "{{ homebrew_macmini_cask_apps }}"
+      when: "'macmini' in group_names"
+      become: true
+      become_user: "{{ ansible_user_id }}"
+      tags: ['homebrew']
+
+    - name: Install MacBook-only Homebrew casks
+      community.general.homebrew_cask:
+        name: "{{ item }}"
+        state: present
+      loop: "{{ homebrew_macbook_cask_apps }}"
+      when: "'macbook' in group_names"
+      become: true
+      become_user: "{{ ansible_user_id }}"
+      tags: ['homebrew']
+
     - ansible.builtin.debug:
         msg: "This playbook is running properly."
     - ansible.builtin.import_tasks: tasks/sudoers.yml
