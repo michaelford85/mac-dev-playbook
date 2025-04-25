@@ -16,7 +16,7 @@ Before starting, I completed Apple's mandatory macOS setup wizard (creating a lo
   - SSH setup.
     - Manually copy the shared SSH keys that are needed to log into the remote Ansible machine, from Dropbox (via Airdrop or Web GUI) at `/My Documents/Macbook Ansible Restore/mac SSH keys`.
   - Turn on [Remote Login](https://support.apple.com/guide/mac-help/allow-a-remote-computer-to-access-your-mac-mchlp1066/mac) and [Screen Sharing](https://support.apple.com/guide/mac-help/turn-screen-sharing-on-or-off-mh11848/mac) in Settings on Target Mac
-  - Ensure that the approprpiate SSH Public key (at `/My Documents/Macbook Ansible Restore/mac SSH keys`) that allows remote access is populated in ~/.ssh/authorized_keys
+  - Ensure that the approprpiate SSH Public key (at `/My Documents/Macbook Ansible Restore/mac SSH keys`) that allows remote access is populated in `~/.ssh/authorized_keys` on the target Mac.
   - Sign into:
     - iCloud
     - iMessage
@@ -165,25 +165,25 @@ Before starting, I completed Apple's mandatory macOS setup wizard (creating a lo
   - Al Dente
   - makemkv
 - Add remote machine information for vscode (from Dropbox)
-  - Destination: ~/.ssh/remote-hosts/config
+  - Destination: `~/.ssh/remote-hosts/config`
 - Change Optical Drive Settings:
   - ![Blu Ray and DVD Settings](./images/dvd_blu_ray.png)
 - Run the playbook remotely with `--tags post`.
   - `$ ansible-playbook main.yml  --tags "post" 
 
+### Manual Application Configurations
 
 ### Macbook-specific manual configuration
-- AlDente:
-  - Settings -> Charge:
-    - Stop Charging when sleeping: `Enabled`
-    - Hardware Battery Percentage: `Enabled`
-  - Settings -> Features:
-    - Menubar Right Click: `Do Nothing`
-
+- [AlDente](./images/aldente/)
+- [Handbrake](./images/handbrake/)
+- [MakeMKV]((./images/makemkv/)
 
 ## When formatting old Mac
-  - Deauthorize CleanMyMac
   - Follow Apple's guide (TODO)
 
 ## Todo list for post provision automation
 - Add SSH keys to ~/.ssh and change permissions to 0600
+- Apps to Configure
+  - Windows App
+  - Alcove
+
