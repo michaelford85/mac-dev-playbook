@@ -176,7 +176,7 @@ Before starting, I completed Apple's mandatory macOS setup wizard (creating a lo
 ### Macbook-specific manual configuration
 - [AlDente](./images/aldente/)
 - [Handbrake](./images/handbrake/)
-- [MakeMKV]((./images/makemkv/)
+- [MakeMKV](./images/makemkv/)
 
 ## When formatting old Mac
   - Follow Apple's guide (TODO)
