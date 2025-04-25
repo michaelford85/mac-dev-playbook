@@ -15,7 +15,7 @@ Before starting, I completed Apple's mandatory macOS setup wizard (creating a lo
 
   - SSH setup.
     - Manually copy any shared SSH keys that are needed to log into the remote Ansible machine, from Dropbox (via Airdrop or Web GUI)
-  - Turn on `Remote Login` and `Screen Sharing` in Settings on Target Mac
+  - Turn on (Remote Login](https://support.apple.com/guide/mac-help/allow-a-remote-computer-to-access-your-mac-mchlp1066/mac) and [Screen Sharing](https://support.apple.com/guide/mac-help/turn-screen-sharing-on-or-off-mh11848/mac) in Settings on Target Mac
   - Ensure that the approprpiate SSH Private key that allows remote access is populated in ~/.ssh/authorized_keys
   - Sign into:
     - iCloud
@@ -87,7 +87,12 @@ Before starting, I completed Apple's mandatory macOS setup wizard (creating a lo
   - Finder Favorites Sidebar
     - ![Finder Favorites](./images/finder_favorites.png) 
     - Remove Recent
-    - Add ~/git-workspace, ~/chatgpt-workspace, ~/Library/Caches
+    - Add:
+      - ~/.ssh
+      - ~/git-workspace
+      - ~/chatgpt-workspace
+      - ~/.kube
+      - ~/Library/Caches
   - In Finder settings, check the box `Show all filename extensions` and set `New Finder windows show` to the home folder.
     - ![Finder Settings](./images/finder_settings.png)
 - Logi Options:
@@ -159,12 +164,6 @@ Before starting, I completed Apple's mandatory macOS setup wizard (creating a lo
   - DaisyDisk
   - Al Dente
   - makemkv
-- Add folders to sidebar in Finder:
-  - ~/Dropbox
-  - ~/.ssh
-  - ~/git-workspace
-  - ~/.kube
-  - ~/Library/Caches
 - Add remote machine information for vscode (from Dropbox)
   - Destination: ~/.ssh/remote-hosts/config
 - Change Optical Drive Settings:
