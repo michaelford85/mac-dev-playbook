@@ -14,9 +14,9 @@ the default location for all necessary files in Dropbox is: `/Dropbox/My Documen
 Before starting, I completed Apple's mandatory macOS setup wizard (creating a local user account, and optionally signing into my iCloud account). Once on the macOS desktop, I do the following (in order):
 
   - SSH setup.
-    - Manually copy any shared SSH keys that are needed to log into the remote Ansible machine, from Dropbox (via Airdrop or Web GUI)
+    - Manually copy the shared SSH keys that are needed to log into the remote Ansible machine, from Dropbox (via Airdrop or Web GUI) at `/My Documents/Macbook Ansible Restore/mac SSH keys`.
   - Turn on [Remote Login](https://support.apple.com/guide/mac-help/allow-a-remote-computer-to-access-your-mac-mchlp1066/mac) and [Screen Sharing](https://support.apple.com/guide/mac-help/turn-screen-sharing-on-or-off-mh11848/mac) in Settings on Target Mac
-  - Ensure that the approprpiate SSH Private key that allows remote access is populated in ~/.ssh/authorized_keys
+  - Ensure that the approprpiate SSH Public key (at `/My Documents/Macbook Ansible Restore/mac SSH keys`) that allows remote access is populated in ~/.ssh/authorized_keys
   - Sign into:
     - iCloud
     - iMessage
