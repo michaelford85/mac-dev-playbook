@@ -84,7 +84,10 @@ Before starting, I completed Apple's mandatory macOS setup wizard (creating a lo
   - Use the Terminal to permanently set hidden files to show in Finder
     - `$ defaults write com.apple.Finder AppleShowAllFiles true`
     - `$ killall Finder`
-  - Remove Recent from Finder sidebar
+  - Finder Favorites Sidebar
+    - ![Finder Favorites](./images/finder_favorites.png) 
+    - Remove Recent
+    - Add ~/git-workspace, ~/chatgpt-workspace, ~/Library/Caches
   - In Finder settings, check the box `Show all filename extensions` and set `New Finder windows show` to the home folder.
     - ![Finder Settings](./images/finder_settings.png)
 - Logi Options:
