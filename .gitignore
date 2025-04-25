@@ -2,5 +2,7 @@
 .DS_Store
 *.retry
 roles*
+!roles/cleanmac/
+!roles/cleanmac/**/*
 collections*
 config.yml
