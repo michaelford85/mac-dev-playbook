@@ -55,6 +55,10 @@
       tags: ['dock']
       environment:
         PATH: "/usr/local/bin/:{{ ansible_env.PATH }}"
+    - role: cleanmac
+      tags: ['cleanmac']
+      environment:
+        PATH: "/opt/homebrew/bin/:/usr/local/bin/:{{ ansible_env.PATH }}"
 
   tasks:
     # Install host-specific Homebrew formulae

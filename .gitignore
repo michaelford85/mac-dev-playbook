@@ -1,8 +1,9 @@
 *.vagrant
 .DS_Store
 *.retry
-roles*
-!roles/cleanmac/
-!roles/cleanmac/**/*
+roles/ansible-role-dock
+roles/elliotweiser.osx-command-line-tools
+roles/geerlingguy.dotfiles
+roles/homebrew
 collections*
 config.yml

@@ -1,0 +1,71 @@
+#SPDX-License-Identifier: MIT-0
+
+# tasks file for cleanmac
+---
+
+- name: Find all items in ~/Library/Caches (remote)
+  command: "find {{ ansible_env.HOME }}/Library/Caches -mindepth 1"
+  register: user_cache_items
+  ignore_errors: true
+  changed_when: false
+
+- name: Delete contents of ~/Library/Caches
+  ansible.builtin.shell: "shopt -s dotglob && rm -rf {{ ansible_env.HOME }}/Library/Caches/*"
+  when: user_cache_items.stdout_lines is defined
+
+- name: Empty user Trash (remote)
+  shell: "rm -rf {{ ansible_env.HOME }}/.Trash/*"
+
+- name: Remove .dmg files from Downloads
+  shell: "find {{ ansible_env.HOME }}/Downloads -type f -name '*.dmg' -delete"
+  when: clean_dmg_files
+
+- name: Delete system caches (requires sudo)
+  become: true
+  shell: rm -rf /Library/Caches/*
+  ignore_errors: true 
+
+- name: Delete user logs
+  shell: rm -rf {{ ansible_env.HOME }}/Library/Logs/*
+  ignore_errors: true
+
+- name: Flush DNS cache
+  become: true
+  command: dscacheutil -flushcache && killall -HUP mDNSResponder
+
+- name: Clear QuickLook cache
+  command: qlmanage -r cache
+  ignore_errors: true
+
+- name: Delete system logs older than X days
+  become: true
+  find:
+    paths:
+      - /Library/Logs
+      - /private/var/log
+    age: "{{ log_retention_days }}d"
+    recurse: yes
+  register: old_logs
+
+- name: Remove old system logs
+  become: true
+  file:
+    path: "{{ item.path }}"
+    state: absent
+  loop: "{{ old_logs.files }}"
+  when: clean_old_system_logs
+
+- name: Run brew cleanup for formulae
+  command: "brew cleanup --prune={{ homebrew_old_version_retention_days }} formula"
+
+- name: Run brew cleanup for casks
+  command: "brew cleanup --prune={{ homebrew_old_version_retention_days }} cask"
+
+- name: Force remove Homebrew cache (even latest)
+  shell: rm -rf "$(brew --cache)"
+  when: force_clean_homebrew_cache
+
+- name: Reindex Spotlight search on main volume
+  become: true
+  command: mdutil -E /
+  when: reindex_spotlight
