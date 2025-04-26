@@ -162,8 +162,6 @@ Before starting, I completed Apple's mandatory macOS setup wizard (creating a lo
   - DaisyDisk
   - Al Dente
   - makemkv
-- Add remote machine information for vscode (from Dropbox)
-  - Destination: `~/.ssh/remote-hosts/config`
 - Change Optical Drive Settings:
   - ![Blu Ray and DVD Settings](./images/dvd_blu_ray.png)
 - Run the playbook remotely with `--tags post`.
