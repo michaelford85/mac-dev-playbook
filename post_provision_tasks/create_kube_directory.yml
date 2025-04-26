@@ -1,5 +1,11 @@
 ---
+- name: Check if ~/.kube directory exists
+  ansible.builtin.stat:
+    path: ~/.kube
+  register: kube_dir_stat
+
 - name: Create kube directory if it doesn't exist
   ansible.builtin.file:
     path: ~/.kube
     state: directory
+  when: not kube_dir_stat.stat.exists

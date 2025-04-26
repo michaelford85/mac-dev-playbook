@@ -1,12 +1,24 @@
 ---
-- name: Create venvs directory
+- name: Check if ~/venvs exists
+  ansible.builtin.stat:
+    path: "{{ home_path }}/venvs"
+  register: venvs_dir_stat
+
+- name: Create venvs directory if it does not exist
   ansible.builtin.file:
     path: "{{ home_path }}/venvs"
     state: directory
+  when: not venvs_dir_stat.stat.exists
 
-- name: Create ansible Virtual Environment
+- name: Check if ansible venv exists
+  ansible.builtin.stat:
+    path: "{{ home_path }}/venvs/ansible"
+  register: ansible_venv_stat
+
+- name: Create ansible Virtual Environment if it does not exist
   ansible.builtin.shell:
     cmd: "python3 -m venv {{ home_path }}/venvs/ansible"
+  when: not ansible_venv_stat.stat.exists
 
 - name: Install Ansible in the virtual environment
   ansible.builtin.pip:

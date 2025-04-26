@@ -2,38 +2,52 @@
 # Task: Copy AWS VM SSH keys to ~/.ssh/
 # This task copies the AWS VM SSH keys from the specified source directory to the ~/.ssh/ directory on the target machine.
 # The keys are copied with the specified owner, group, and mode permissions.
-- name: Copy AWS VM SSH keys to ~/.ssh/
-  ansible.builtin.copy:
-    src: "{{ dropbox_local_path }}/My Documents/SSH Keys/AWS/{{ item }}"
-    remote_src: true
-    dest: "{{ home_path }}/.ssh/{{ item }}"
-    owner: "{{ ansible_user }}"
-    group: staff
-    mode: 0600
-  with_items:
+---
+- name: Check if AWS VM SSH keys already exist
+  ansible.builtin.stat:
+    path: "{{ home_path }}/.ssh/{{ item }}"
+  loop:
     - mford-useast-1-key.pem
     - mford-useast-2-key.pem
+  register: aws_keys_stat
 
-# Task: Copy GCP VM SSH keys to ~/.ssh/
-# This task copies the GCP VM SSH keys from the specified source directory to the ~/.ssh/ directory on the target machine.
-# The keys are copied with the specified owner, group, and mode permissions.
-- name: Copy GCP VM SSH keys to ~/.ssh/
+- name: Copy AWS VM SSH keys to ~/.ssh/ if not present
+  ansible.builtin.copy:
+    src: "{{ dropbox_local_path }}/My Documents/SSH Keys/AWS/{{ item.item }}"
+    remote_src: true
+    dest: "{{ home_path }}/.ssh/{{ item.item }}"
+    owner: "{{ ansible_user }}"
+    group: staff
+    mode: '0600'
+  loop: "{{ aws_keys_stat.results }}"
+  when: not item.stat.exists
+
+- name: Check if GCP VM SSH key exists
+  ansible.builtin.stat:
+    path: "{{ home_path }}/.ssh/michaelford85_github.pem"
+  register: gcp_key_stat
+
+- name: Copy GCP VM SSH key to ~/.ssh/ if not present
   ansible.builtin.copy:
     src: "{{ dropbox_local_path }}/My Documents/SSH Keys/Github/michaelford85/michaelford85_github.pem"
     remote_src: true
     dest: "{{ home_path }}/.ssh/michaelford85_github.pem"
     owner: "{{ ansible_user }}"
     group: staff
-    mode: 0600
+    mode: '0600'
+  when: not gcp_key_stat.stat.exists
 
-# Task: Copy Home Lab SSH keys to ~/.ssh/
-# This task copies the Home Lab SSH keys from the specified source directory to the ~/.ssh/ directory on the target machine.
-# The keys are copied with the specified owner, group, and mode permissions.
-- name: Copy Home Lab SSH keys to ~/.ssh/
+- name: Check if Home Lab SSH key exists
+  ansible.builtin.stat:
+    path: "{{ home_path }}/.ssh/fordlab.pem"
+  register: home_lab_key_stat
+
+- name: Copy Home Lab SSH key to ~/.ssh/ if not present
   ansible.builtin.copy:
     src: "{{ dropbox_local_path }}/My Documents/SSH Keys/Home Lab/fordlab.pem"
     remote_src: true
     dest: "{{ home_path }}/.ssh/fordlab.pem"
     owner: "{{ ansible_user }}"
     group: staff
-    mode: 0600
+    mode: '0600'
+  when: not home_lab_key_stat.stat.exists

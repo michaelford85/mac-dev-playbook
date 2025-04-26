@@ -1,8 +1,0 @@
----
-
-# This playbook is used to create the chatgpt-workspace folder for temporary files
-
-- name: Ensure chatgpt-workspace directory exists
-  ansible.builtin.file:
-    path: ~/chatgpt-workspace
-    state: directory
