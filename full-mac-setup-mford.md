@@ -69,8 +69,8 @@ Before starting, I completed Apple's mandatory macOS setup wizard (creating a lo
   - Install [Google Chat](https://chat.google.com/download/) from within Brave Browser
   - Install [VMWare Fusion Player](https://customerconnect.vmware.com/en/evalcenter?p=fusion-player-personal-13) (dmg file and licence are in DropBox)
 - Set up Dropbox and sync the following folders:
-  - `{{ dropbox_local_path }}/Dropbox/apps/`
-  - `{{ dropbox_local_path }}/Dropbox/My Documents/Macbook Ansible Restore/`
+  - `{{ dropbox_local_path }}/apps/`
+  - `{{ dropbox_local_path }}/My Documents/Macbook Ansible Restore/`
     - Where `{{ dropbox_local_path }}` is the path to the Dropbox folder on the target machine, that you should also specify in the `config.yml` file.
 - Run the playbook remotely with `--skip-tags homebrew, post`.
   - `$ ansible-playbook main.yml  --skip-tags "homebrew,post"`
@@ -164,8 +164,10 @@ Before starting, I completed Apple's mandatory macOS setup wizard (creating a lo
   - makemkv
 - Change Optical Drive Settings:
   - ![Blu Ray and DVD Settings](./images/dvd_blu_ray.png)
+- Wallpaper
+  - Located in `{{ dropbox_local_path }}/My Documents/Desktop Backgrounds`
 - Run the playbook remotely with `--tags post`.
-  - `$ ansible-playbook main.yml  --tags "post" 
+  - `$ ansible-playbook main.yml  --tags "post` 
 
 ### Manual Application Configurations
 - Instructions and images found in Dropbox at `/Dropbox/My Documents/Macbook Ansible Restore/apps`
@@ -174,6 +176,10 @@ Before starting, I completed Apple's mandatory macOS setup wizard (creating a lo
   - MakeMKV
   - Windows App
   - Logi Options+
+  - Slack
+  - Chrome
+  - Brave
+
 
 ### Macbook-specific manual configuration
 - Instructions and images found in Dropbox at `/Dropbox/My Documents/Macbook Ansible Restore/apps`
