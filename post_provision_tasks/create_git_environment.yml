@@ -1,7 +1,4 @@
----
-
 # This playbook is used to create the necessary git environment for the mac-dev-playbook.
-
 ---
 - name: Check if git-workspace directory exists
   ansible.builtin.stat:
