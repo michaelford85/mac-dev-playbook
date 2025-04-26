@@ -185,7 +185,7 @@ Before starting, I completed Apple's mandatory macOS setup wizard (creating a lo
   - Follow Apple's guide (TODO)
 
 ## Todo list for post provision automation
-- Apps to Configure
+- Apps to Configure 
   - Alcove
 
 
