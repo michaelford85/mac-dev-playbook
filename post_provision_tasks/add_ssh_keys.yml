@@ -51,3 +51,30 @@
     group: staff
     mode: '0600'
   when: not home_lab_key_stat.stat.exists
+
+- name: Check if Github SSH Config file exists
+  ansible.builtin.stat:
+    path: "{{ home_path }}/.ssh/config"
+  register: github_config_stat
+
+- name: Copy Github SSH Config file to ~/.ssh/ if not present
+  ansible.builtin.copy:
+    src: "{{ dropbox_local_path }}/My Documents/SSH Keys/Github/config"
+    remote_src: true
+    dest: "{{ home_path }}/.ssh/config"
+    owner: "{{ ansible_user }}"
+    group: staff
+    mode: '0600'
+  when: not github_config_stat.stat.exists
+
+- name: Test GitHub SSH authentication
+  ansible.builtin.shell:
+    cmd: "ssh -T git@github.com"
+  register: github_ssh_test
+  failed_when: >
+    (github_ssh_test.rc != 1 and github_ssh_test.rc != 0) or
+    ('successfully authenticated' not in github_ssh_test.stderr | lower)
+
+- name: Display GitHub SSH authentication message
+  ansible.builtin.debug:
+    msg: "{{ github_ssh_test.stderr }}"

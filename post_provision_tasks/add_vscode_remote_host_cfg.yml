@@ -1,0 +1,20 @@
+# Task: Copy VSCode remote-hosts SSH config if not already present
+# This task checks if the ~/.ssh/remote-hosts/config file exists.
+# If it does not exist, it copies the config file from the Dropbox directory
+# {{ dropbox_local_path }}/My Documents/Mac Ansible Restore/apps/vscode/remote-apps/config
+# and sets appropriate ownership and permissions.
+---
+- name: Check if remote-hosts SSH config exists
+  ansible.builtin.stat:
+    path: "{{ home_path }}/.ssh/remote-hosts/config"
+  register: remote_hosts_config_stat
+
+- name: Copy remote-hosts SSH config if not present
+  ansible.builtin.copy:
+    src: "{{ dropbox_local_path }}/My Documents/Macbook Ansible Restore/apps/vscode/remote-hosts/config"
+    remote_src: true
+    dest: "{{ home_path }}/.ssh/remote-hosts/config"
+    owner: "{{ ansible_user }}"
+    group: staff
+    mode: '0600'
+  when: not remote_hosts_config_stat.stat.exists

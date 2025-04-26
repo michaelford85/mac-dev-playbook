@@ -6,7 +6,7 @@ This document covers that, at least in terms of setting up a brand new Mac out o
 
 These instructions assume that the playbook and ansible are installed on a remote linux machine.
 
-the default location for all necessary files in Dropbox is: `/Dropbox/My Documents/Mac Ansible Restore`
+the default location for all necessary files in Dropbox is: `/Dropbox/My Documents/Macbook Ansible Restore`
 
 ## Initial configuration of a brand new Mac
 
@@ -170,7 +170,7 @@ Before starting, I completed Apple's mandatory macOS setup wizard (creating a lo
   - `$ ansible-playbook main.yml  --tags "post" 
 
 ### Manual Application Configurations
-- Instructions and images found in Dropbox at `/Dropbox/My Documents/Mac Ansible Restore/apps`
+- Instructions and images found in Dropbox at `/Dropbox/My Documents/Macbook Ansible Restore/apps`
 - Applications to configure:
   - Handbrake
   - MakeMKV
@@ -178,15 +178,13 @@ Before starting, I completed Apple's mandatory macOS setup wizard (creating a lo
   - Logi Options+
 
 ### Macbook-specific manual configuration
-- Instructions and images found in Dropbox at `/Dropbox/My Documents/Mac Ansible Restore/apps`
+- Instructions and images found in Dropbox at `/Dropbox/My Documents/Macbook Ansible Restore/apps`
   - AlDente
 
 ## When formatting old Mac
   - Follow Apple's guide (TODO)
 
 ## Todo list for post provision automation
-- Add SSH keys from `/Dropbox/My Documents/SSH Keys` to `~/.ssh` and change permissions to 0600
-- Set up github ssh key config file
 - Apps to Configure
   - Alcove
 
