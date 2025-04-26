@@ -95,8 +95,6 @@ Before starting, I completed Apple's mandatory macOS setup wizard (creating a lo
       - ~/Library/Caches
   - In Finder settings, check the box `Show all filename extensions` and set `New Finder windows show` to the home folder.
     - ![Finder Settings](./images/finder_settings.png)
-- Logi Options:
-  - Complete all settings for the MX 3S Mouse. All the images that show desired settings can be found [here](./images/logi_options/)
 - System Settings
   - Wi-Fi
     - Set Wireless SSID and DNS Server to Pihole
@@ -172,11 +170,17 @@ Before starting, I completed Apple's mandatory macOS setup wizard (creating a lo
   - `$ ansible-playbook main.yml  --tags "post" 
 
 ### Manual Application Configurations
+- Instructions and images found in Dropbox at `/Dropbox/My Documents/Mac Ansible Restore/apps`
+- Applications to configure:
+  - AlDente
+  - Handbrake
+  - MakeMKV
+  - Windows App
+  - Logi Options+
 
 ### Macbook-specific manual configuration
-- [AlDente](./images/aldente/)
-- [Handbrake](./images/handbrake/)
-- [MakeMKV](./images/makemkv/)
+- Instructions and images found in Dropbox at `/Dropbox/My Documents/Mac Ansible Restore/apps`
+  - AlDente
 
 ## When formatting old Mac
   - Follow Apple's guide (TODO)
@@ -184,6 +188,5 @@ Before starting, I completed Apple's mandatory macOS setup wizard (creating a lo
 ## Todo list for post provision automation
 - Add SSH keys to ~/.ssh and change permissions to 0600
 - Apps to Configure
-  - Windows App
   - Alcove
 
