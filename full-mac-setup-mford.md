@@ -172,7 +172,6 @@ Before starting, I completed Apple's mandatory macOS setup wizard (creating a lo
 ### Manual Application Configurations
 - Instructions and images found in Dropbox at `/Dropbox/My Documents/Mac Ansible Restore/apps`
 - Applications to configure:
-  - AlDente
   - Handbrake
   - MakeMKV
   - Windows App
@@ -186,7 +185,7 @@ Before starting, I completed Apple's mandatory macOS setup wizard (creating a lo
   - Follow Apple's guide (TODO)
 
 ## Todo list for post provision automation
-- Add SSH keys to ~/.ssh and change permissions to 0600
+- Add SSH keys from `/Dropbox/My Documents/SSH Keys` to `~/.ssh` and change permissions to 0600
 - Apps to Configure
   - Alcove
 
