@@ -186,6 +186,8 @@ Before starting, I completed Apple's mandatory macOS setup wizard (creating a lo
 
 ## Todo list for post provision automation
 - Add SSH keys from `/Dropbox/My Documents/SSH Keys` to `~/.ssh` and change permissions to 0600
+- Set up github ssh key config file
 - Apps to Configure
   - Alcove
+
 
