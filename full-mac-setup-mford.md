@@ -6,7 +6,10 @@ This document covers that, at least in terms of setting up a brand new Mac out o
 
 These instructions assume that the playbook and ansible are installed on a remote linux machine.
 
-the default location for all necessary files in Dropbox is: `/Dropbox/My Documents/Macbook Ansible Restore`
+The default location for all necessary files in Dropbox is: 
+- In the Dropbox GUI: `/Dropbox/My Documents/Macbook Ansible Restore`
+- On the target Mac: `{{ dropbox_local_path }}/My Documents/Macbook Ansible Restore`
+  - Where `{{ dropbox_local_path }}` is the path to the Dropbox folder on the target machine, that you should also specify in the `config.yml` file.
 
 ## Initial configuration of a brand new Mac
 
@@ -14,9 +17,9 @@ the default location for all necessary files in Dropbox is: `/Dropbox/My Documen
 Before starting, I completed Apple's mandatory macOS setup wizard (creating a local user account, and optionally signing into my iCloud account). Once on the macOS desktop, I do the following (in order):
 
   - SSH setup.
-    - Manually copy the shared SSH keys that are needed to log into the remote Ansible machine, from Dropbox (via Airdrop or Web GUI) at `/My Documents/Macbook Ansible Restore/mac SSH keys`.
+    - Manually copy the private SSH key that are needed to log into the remote Ansible machine, from Dropbox (via Airdrop or Web GUI) at `/Dropbox/My Documents/SSH keys/Home Lab/fordlab.pem`.
   - Turn on [Remote Login](https://support.apple.com/guide/mac-help/allow-a-remote-computer-to-access-your-mac-mchlp1066/mac) and [Screen Sharing](https://support.apple.com/guide/mac-help/turn-screen-sharing-on-or-off-mh11848/mac) in Settings on Target Mac
-  - Ensure that the approprpiate SSH Public key (at `/My Documents/Macbook Ansible Restore/mac SSH keys`) that allows remote access is populated in `~/.ssh/authorized_keys` on the target Mac.
+  - Ensure that the approprpiate SSH Public key (at `/Dropbox/My Documents/SSH keys/Home Lab/fordlab.pub`) that allows remote access is populated in `~/.ssh/authorized_keys` on the target Mac.
   - Sign into:
     - iCloud
     - iMessage
@@ -71,7 +74,6 @@ Before starting, I completed Apple's mandatory macOS setup wizard (creating a lo
 - Set up Dropbox and sync the following folders:
   - `{{ dropbox_local_path }}/apps/`
   - `{{ dropbox_local_path }}/My Documents/Macbook Ansible Restore/`
-    - Where `{{ dropbox_local_path }}` is the path to the Dropbox folder on the target machine, that you should also specify in the `config.yml` file.
 - Run the playbook remotely with `--skip-tags homebrew, post`.
   - `$ ansible-playbook main.yml  --skip-tags "homebrew,post"`
   - NOTE: The Dock may not show updates after this; in order to show the changes, run the following command in the Mac Terminal:
@@ -170,7 +172,7 @@ Before starting, I completed Apple's mandatory macOS setup wizard (creating a lo
   - `$ ansible-playbook main.yml  --tags "post` 
 
 ### Manual Application Configurations
-- Instructions and images found in Dropbox at `/Dropbox/My Documents/Macbook Ansible Restore/apps`
+- Instructions and images found in Dropbox at `{{ dropbox_local_path }}/My Documents/Macbook Ansible Restore/apps`
 - Applications to configure:
   - Handbrake
   - MakeMKV
@@ -182,7 +184,7 @@ Before starting, I completed Apple's mandatory macOS setup wizard (creating a lo
 
 
 ### Macbook-specific manual configuration
-- Instructions and images found in Dropbox at `/Dropbox/My Documents/Macbook Ansible Restore/apps`
+- Instructions and images found in Dropbox at `{{ dropbox_local_path }}/My Documents/Macbook Ansible Restore/apps`
   - AlDente
 
 ## When formatting old Mac
