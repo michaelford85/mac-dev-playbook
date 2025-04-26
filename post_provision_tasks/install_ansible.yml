@@ -20,8 +20,15 @@
     cmd: "python3 -m venv {{ home_path }}/venvs/ansible"
   when: not ansible_venv_stat.stat.exists
 
-- name: Install Ansible in the virtual environment
+- name: Check if ansible-core is installed in the venv
+  ansible.builtin.shell:
+    cmd: "{{ home_path }}/venvs/ansible/bin/pip show ansible-core"
+  register: ansible_core_check
+  ignore_errors: true
+
+- name: Install Ansible in the virtual environment if not present
   ansible.builtin.pip:
     name: ansible-core
     version: "{{ ansible_version_mac }}"
     virtualenv: "{{ home_path }}/venvs/ansible"
+  when: ansible_core_check.rc != 0
