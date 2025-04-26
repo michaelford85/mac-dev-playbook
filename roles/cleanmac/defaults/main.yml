@@ -6,4 +6,4 @@ clean_old_system_logs: true
 log_retention_days: 7
 homebrew_old_version_retention_days: 7
 force_clean_homebrew_cache: true
-reindex_spotlight: true
+reindex_spotlight: false
