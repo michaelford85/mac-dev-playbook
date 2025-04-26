@@ -36,6 +36,7 @@
 - name: Clear QuickLook cache
   command: qlmanage -r cache
   ignore_errors: true
+  when: clear_qlcache_files
 
 - name: Delete system logs older than X days
   become: true
