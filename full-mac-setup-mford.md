@@ -181,6 +181,7 @@ Before starting, I completed Apple's mandatory macOS setup wizard (creating a lo
   - Slack
   - Chrome
   - Brave
+  - Wireguard
 
 
 ### Macbook-specific manual configuration
@@ -193,6 +194,5 @@ Before starting, I completed Apple's mandatory macOS setup wizard (creating a lo
 ## Todo list for post provision automation
 - Apps to Configure 
   - Alcove
-  - Wireguard
 
 
