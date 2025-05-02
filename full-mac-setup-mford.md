@@ -188,6 +188,9 @@ Before starting, I completed Apple's mandatory macOS setup wizard (creating a lo
 - Instructions and images found in Dropbox at `{{ dropbox_local_path }}/My Documents/Macbook Ansible Restore/apps`
   - AlDente
 
+### Other MacOS App Notes
+- Found at this Markdown file: [Mac Application Setup Notes](./mac-app-notes-mford.md)
+
 ## When formatting old Mac
   - Follow Apple's guide (TODO)
 
