@@ -49,4 +49,4 @@ Export your iMessage history into a browsable HTML archive with attachments.
 To save all messages and attachments in a single HTML file with full conversation context:
 
 ```bash
-imessage-exporter -f html -c full -o ~/imessage_export_$(date +%s)
+imessage-exporter -f html -c full -o ~/imessage_export_$(date +%d%m%Y%H%M%S)_full
