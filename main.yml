@@ -1,5 +1,6 @@
 ---
 - name: Configure hosts.
+  # hosts: work_mac, macmini
   hosts: macmini, macbook
   # hosts: macbook
   # hosts: macmini
@@ -44,6 +45,7 @@
       tags: ['homebrew']
       environment:
         PATH: "/opt/homebrew/bin/:/usr/local/bin/:{{ ansible_env.PATH }}"
+      when: "'work_mac' not in group_names"
     - role: geerlingguy.dotfiles
       when: configure_dotfiles
       tags: ['dotfiles']
@@ -84,6 +86,16 @@
       become_user: "{{ ansible_user_id }}"
       tags: ['homebrew']
 
+    - name: Install Work Mac-only Homebrew formulae
+      community.general.homebrew:
+        name: "{{ item }}"
+        state: present
+      loop: "{{ homebrew_work_mac_packages }}"
+      when: "'work_mac' in group_names"
+      become: true
+      become_user: "{{ ansible_user_id }}"
+      tags: ['homebrew']
+
     # Install host-specific Homebrew casks
     - name: Install Mac mini-only Homebrew casks
       community.general.homebrew_cask:
@@ -101,6 +113,16 @@
         state: present
       loop: "{{ homebrew_macbook_cask_apps }}"
       when: "'macbook' in group_names"
+      become: true
+      become_user: "{{ ansible_user_id }}"
+      tags: ['homebrew']
+    
+    - name: Install Work Mac-only Homebrew casks
+      community.general.homebrew_cask:
+        name: "{{ item }}"
+        state: present
+      loop: "{{ homebrew_work_mac_cask_apps }}"
+      when: "'work_mac' in group_names"
       become: true
       become_user: "{{ ansible_user_id }}"
       tags: ['homebrew']
