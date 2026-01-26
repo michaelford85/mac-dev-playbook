@@ -68,9 +68,10 @@ Before starting, I completed Apple's mandatory macOS setup wizard (creating a lo
   - `$ ansible-playbook main.yml  --tags "homebrew,sudoers"`
   - If there are errors, you may need to finish up other tasks like installing 'old-fashioned' apps first
 - Install old-fashioned apps:
-  - Install [Insta360 Link](https://www.insta360.com/download/insta360-link)
-  - Install [Google Chat](https://chat.google.com/download/) from within Brave Browser
-  - Install [VMWare Fusion Player](https://customerconnect.vmware.com/en/evalcenter?p=fusion-player-personal-13) (dmg file and licence are in DropBox)
+  - [Insta360 Link](https://www.insta360.com/download/insta360-link)
+  - [Google Chat](https://chat.google.com/download/) from within Brave Browser
+  - [VMWare Fusion Player](https://customerconnect.vmware.com/en/evalcenter?p=fusion-player-personal-13) (dmg file and license are in DropBox)
+  - [MakeMKV](https://www.makemkv.com/) (License Key is in 1Password)
 - Set up Dropbox and sync the following folders:
   - `{{ dropbox_local_path }}/apps/`
   - `{{ dropbox_local_path }}/My Documents/Macbook Ansible Restore/`

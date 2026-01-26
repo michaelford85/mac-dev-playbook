@@ -4,20 +4,21 @@
 ---
 
 - name: Find all items in ~/Library/Caches (remote)
-  command: "find {{ ansible_env.HOME }}/Library/Caches -mindepth 1"
+  command: "find {{ ansible_facts['user_dir'] }}/Library/Caches -mindepth 1"
   register: user_cache_items
   ignore_errors: true
   changed_when: false
 
 - name: Delete contents of ~/Library/Caches
-  ansible.builtin.shell: "shopt -s dotglob && rm -rf {{ ansible_env.HOME }}/Library/Caches/*"
+  ansible.builtin.shell: "shopt -s dotglob && rm -rf {{ ansible_facts['user_dir'] }}/Library/Caches/*"
   when: user_cache_items.stdout_lines is defined
 
-- name: Empty user Trash (remote)
-  shell: "rm -rf {{ ansible_env.HOME }}/.Trash/*"
+- name: Empty user Trash (requires sudo)
+  shell: "rm -rf {{ ansible_facts['user_dir'] }}/.Trash/*"
+  become: true
 
 - name: Remove .dmg files from Downloads
-  shell: "find {{ ansible_env.HOME }}/Downloads -type f -name '*.dmg' -delete"
+  shell: "find {{ ansible_facts['user_dir'] }}/Downloads -type f -name '*.dmg' -delete"
   when: clean_dmg_files
 
 - name: Delete system caches (requires sudo)
@@ -26,7 +27,7 @@
   ignore_errors: true 
 
 - name: Delete user logs
-  shell: rm -rf {{ ansible_env.HOME }}/Library/Logs/*
+  shell: rm -rf {{ ansible_facts['user_dir'] }}/Library/Logs/*
   ignore_errors: true
 
 - name: Flush DNS cache

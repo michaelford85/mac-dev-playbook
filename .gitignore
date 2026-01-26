@@ -7,6 +7,5 @@ roles/geerlingguy.dotfiles
 roles/homebrew
 collections*
 config.yml
-config_personal.yml
-config_work.yml
+config_*
 inventory

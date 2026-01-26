@@ -7,4 +7,14 @@ roles:
     version: v2.3.0
 
 collections:
+  - name: community.general
+    type: git
+    source: https://github.com/ansible-collections/community.general.git
+    version: 12.3.0
   - name: geerlingguy.mac
+    type: git
+    source: https://github.com/geerlingguy/ansible-collection-mac.git
+    version: 5.0.0
+  - name: wayofdev.macops
+    type: git
+    source: https://github.com/wayofdev/ansible-collection-macops.git
