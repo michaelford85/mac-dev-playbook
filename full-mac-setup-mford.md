@@ -64,8 +64,8 @@ Before starting, I completed Apple's mandatory macOS setup wizard (creating a lo
 ### Automated Installations
 
 - Ensure that config.yml is in the cloned repository, sourced from Dropbox.
-- Run the playbook remotely with `--tags homebrew, sudoers`.
-  - `$ ansible-playbook main.yml  --tags "homebrew,sudoers"`
+- Run the playbook remotely with `--tags homebrew, sudoers --skip-tags "terminal, osx, sublime-text, extra-package, cleanmac"`.
+  - `$ ansible-playbook main.yml  --tags "homebrew,sudoers" --skip-tags "terminal, osx, sublime-text, extra-packages, cleanmac"`
   - If there are errors, you may need to finish up other tasks like installing 'old-fashioned' apps first
 - Install old-fashioned apps:
   - [Insta360 Link](https://www.insta360.com/download/insta360-link)
@@ -75,8 +75,8 @@ Before starting, I completed Apple's mandatory macOS setup wizard (creating a lo
 - Set up Dropbox and sync the following folders:
   - `{{ dropbox_local_path }}/apps/`
   - `{{ dropbox_local_path }}/My Documents/Macbook Ansible Restore/`
-- Run the playbook remotely with `--skip-tags homebrew, post`.
-  - `$ ansible-playbook main.yml  --skip-tags "homebrew,post"`
+- Run the playbook remotely with `--skip-tags homebrew, post --skip-tags "terminal, osx, sublime-text, extra-packages, cleanmac"`.
+  - `$ ansible-playbook main.yml  --skip-tags "homebrew,post" --skip-tags "terminal, osx, sublime-text, extra-packages, cleanmac"`
   - NOTE: The Dock may not show updates after this; in order to show the changes, run the following command in the Mac Terminal:
     - `killall Dock`
     - This command will terminate the Dock process, and macOS will automatically restart it. Any changes applied to the Dock should be resolved after this command.
@@ -169,8 +169,8 @@ Before starting, I completed Apple's mandatory macOS setup wizard (creating a lo
   - ![Blu Ray and DVD Settings](./images/dvd_blu_ray.png)
 - Wallpaper
   - Located in `{{ dropbox_local_path }}/My Documents/Desktop Backgrounds`
-- Run the playbook remotely with `--tags post`.
-  - `$ ansible-playbook main.yml  --tags "post` 
+- Run the playbook remotely with `--tags "post" --skip-tags "terminal, osx, sublime-text, extra-packages, cleanmac"`.
+  - `$ ansible-playbook main.yml  --tags "post" --skip-tags "terminal, osx, sublime-text, extra-packages, cleanmac"` 
 
 ### Manual Application Configurations
 - Instructions and images found in Dropbox at `{{ dropbox_local_path }}/My Documents/Macbook Ansible Restore/apps`
