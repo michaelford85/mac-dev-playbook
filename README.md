@@ -4,53 +4,168 @@
 
 [![CI][badge-gh-actions]][link-gh-actions]
 
-This playbook installs and configures most of the software I use on my Mac for web and software development. Some things in macOS are slightly difficult to automate, so I still have a few manual installation steps, but at least it's all documented here.
+This playbook installs and configures most of the software I use on my Mac for web and software development. Some things in macOS are slightly difficult to automate, so there are still a few manual installation steps—but they’re all documented here.
+
+---
+
+## Prerequisites
+
+Before installing Ansible or running this playbook, make sure the following tools are installed and configured **in this order**.
+
+### 1. Install Apple Command Line Tools
+
+```bash
+xcode-select --install
+```
+
+### 2. Install Homebrew
+
+Homebrew is required for managing system packages and dependencies.
+
+```bash
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+```
+
+After installation, ensure Homebrew is on your `PATH` (Apple Silicon Macs):
+
+```bash
+echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> ~/.zprofile
+source ~/.zprofile
+```
+
+### 3. Install pyenv
+
+`pyenv` is used to manage Python versions cleanly and avoid coupling this project to a specific system Python version.
+
+```bash
+brew install pyenv
+```
+
+Add pyenv to your shell:
+
+```bash
+echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.zprofile
+echo 'command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.zprofile
+echo 'eval "$(pyenv init -)"' >> ~/.zprofile
+source ~/.zprofile
+```
+
+### 4. Install the Latest Stable Python Version
+
+Install the latest stable Python version available via pyenv:
+
+```bash
+pyenv install --list | grep -E "^[[:space:]]*[0-9]+\\.[0-9]+\\.[0-9]+$" | tail
+```
+
+Then install and activate it locally:
+
+```bash
+pyenv install <latest_version>
+pyenv local <latest_version>
+```
+
+This creates a `.python-version` file in the repository and ensures a consistent Python runtime.
+
+### 5. Create a Project Virtual Environment
+
+Create and activate a virtual environment **inside the project directory** using the pyenv-managed Python version:
+
+```bash
+python -m venv .venv
+source .venv/bin/activate
+```
+
+From this point on, all Python and Ansible commands should be run inside this virtual environment.
+
+---
+
+## Install Ansible
+
+With the virtual environment activated, install Ansible in a way that is **independent of any hardcoded Python version**:
+
+```bash
+pip install --upgrade pip
+pip install ansible-core
+```
+
+You can verify the installation with:
+
+```bash
+ansible --version
+```
+
+---
 
 ## Installation
 
-  1. Ensure Apple's command line tools are installed (`xcode-select --install` to launch the installer).
-  2. [Install Ansible](https://docs.ansible.com/ansible/latest/installation_guide/index.html):
+1. Clone or download this repository to your local machine.
+2. Activate the virtual environment:
 
-     1. Run the following command to add Python 3 to your $PATH: `export PATH="$HOME/Library/Python/3.9/bin:/opt/homebrew/bin:$PATH"`
-     2. Upgrade Pip: `sudo pip3 install --upgrade pip`
-     3. Install Ansible: `pip3 install ansible-core`
+   ```bash
+   source .venv/bin/activate
+   ```
 
-  3. Clone or download this repository to your local drive.
-  4. Run `ansible-galaxy install -r requirements.yml` inside this directory to install required Ansible roles.
-  5. Run `ansible-playbook main.yml --ask-become-pass` inside this directory. Enter your macOS account password when prompted for the 'BECOME' password.
+3. Install required Ansible roles:
 
-> Note: If some Homebrew commands fail, you might need to agree to Xcode's license or fix some other Brew issue. Run `brew doctor` to see if this is the case.
+   ```bash
+   ansible-galaxy install -r requirements.yml
+   ```
 
-### Use with a remote Mac
+4. Run the playbook:
 
-You can use this playbook to manage other Macs as well; the playbook doesn't even need to be run from a Mac at all! If you want to manage a remote Mac, either another Mac on your network, or a hosted Mac like the ones from [MacStadium](https://www.macstadium.com), you just need to make sure you can connect to it with SSH:
+   ```bash
+   ansible-playbook main.yml --ask-become-pass
+   ```
 
-  1. (On the Mac you want to connect to:) Go to System Preferences > Sharing.
-  2. Enable 'Remote Login'.
+   Enter your macOS account password when prompted for the **BECOME** password.
 
-> You can also enable remote login on the command line:
+> **Note**: If Homebrew-related tasks fail, you may need to accept Xcode’s license or resolve a Brew issue. Run:
 >
->     sudo systemsetup -setremotelogin on
+> ```bash
+> brew doctor
+> ```
 
-Then edit the `inventory` file in this repository and change the line that starts with `127.0.0.1` to:
+---
 
+## Use with a Remote Mac
+
+You can use this playbook to manage other Macs—local or remote (e.g., MacStadium). Ensure SSH access is enabled on the target Mac:
+
+1. System Settings → General → Sharing
+2. Enable **Remote Login**
+
+Or via command line:
+
+```bash
+sudo systemsetup -setremotelogin on
 ```
-[ip address or hostname of mac]  ansible_user=[mac ssh username]
+
+Edit the `inventory` file and replace `127.0.0.1` with:
+
+```text
+<ip_or_hostname> ansible_user=<ssh_username>
 ```
 
-If you need to supply an SSH password (if you don't use SSH keys), make sure to pass the `--ask-pass` parameter to the `ansible-playbook` command.
+If SSH keys are not used, add `--ask-pass` when running `ansible-playbook`.
 
-### Running a specific set of tagged tasks
+---
 
-You can filter which part of the provisioning process to run by specifying a set of tags using `ansible-playbook`'s `--tags` flag. The tags available are `dotfiles`, `homebrew`, `mas`, `extra-packages` and `osx`.
+## Running a Specific Set of Tagged Tasks
 
-    ansible-playbook main.yml -K --tags "dotfiles,homebrew"
+Run only selected portions of the playbook using tags:
+
+```bash
+ansible-playbook main.yml -K --tags "dotfiles,homebrew"
+```
+
+Available tags include: `dotfiles`, `homebrew`, `mas`, `extra-packages`, `osx`.
+
+---
 
 ## Overriding Defaults
 
-Not everyone's development environment and preferred software configuration is the same.
-
-You can override any of the defaults configured in `default.config.yml` by creating a `config.yml` file and setting the overrides in that file. For example, you can customize the installed packages and apps with something like:
+You can override any defaults from `default.config.yml` by creating a `config.yml` file. Example:
 
 ```yaml
 homebrew_installed_packages:
@@ -63,25 +178,23 @@ mas_installed_apps:
   - { id: 498486288, name: "Quick Resizer" }
   - { id: 557168941, name: "Tweetbot" }
   - { id: 497799835, name: "Xcode" }
-
-dock_dockitems:
-  - label: "Launchpad"
-    path: "/Applications/Launchpad.app/"
-    action: add
-    position: 1 
 ```
 
-Any variable can be overridden in `config.yml`; see the supporting roles' documentation for a complete list of available variables.
+Dotfiles are installed by default. Disable with:
 
-My [dotfiles](https://github.com/michaelford85/dotfiles) are also installed into the current user's home directory, including the `.osx` dotfile for configuring many aspects of macOS for better performance and ease of use. You can disable dotfiles management by setting `configure_dotfiles: no` in your configuration.
+```yaml
+configure_dotfiles: no
+```
 
-Finally, there are a few other preferences and settings added on for various apps and services.
+---
 
-## Full / From-scratch setup guide
+## Full / From-Scratch Setup Guide
 
-Since I've used this playbook to set up something like 20 different Macs, I decided to write up a full 100% from-scratch install for my own reference (everyone's particular install will be slightly different).
+A complete from-scratch macOS setup guide is available here:
 
-You can see my full from-scratch setup document here: [full-mac-setup-mford.md](full-mac-setup-mford.md).
+[full-mac-setup-mford.md](full-mac-setup-mford.md)
+
+---
 
 ## Testing the Playbook
 
@@ -92,13 +205,17 @@ You can also run macOS itself inside a VM, for at least some of the required tes
   - [UTM](https://mac.getutm.app)
   - [Tart](https://github.com/cirruslabs/tart)
 
-## Ansible for DevOps
+## Learn Ansible
 
-Check out [Ansible for DevOps](https://www.ansiblefordevops.com/), which teaches you how to automate almost anything with Ansible.
+Check out [Master Ansible](https://teachmeansible.com/), which teaches you how to automate almost anything with Ansible.
+
+This project is continuously tested on GitHub Actions macOS runners.
+---
 
 ## Author
 
-This project was created by [Jeff Geerling](https://www.jeffgeerling.com/) (originally inspired by [MWGriffin/ansible-playbooks](https://github.com/MWGriffin/ansible-playbooks)).
+This project was originally created by [Jeff Geerling](https://www.jeffgeerling.com/) (originally inspired by [MWGriffin/ansible-playbooks](https://github.com/MWGriffin/ansible-playbooks)).
 
 [badge-gh-actions]: https://github.com/geerlingguy/mac-dev-playbook/workflows/CI/badge.svg?event=push
 [link-gh-actions]: https://github.com/geerlingguy/mac-dev-playbook/actions?query=workflow%3ACI
+
