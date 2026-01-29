@@ -12,6 +12,7 @@
 - name: Delete contents of ~/Library/Caches
   ansible.builtin.shell: "shopt -s dotglob && rm -rf {{ ansible_facts['user_dir'] }}/Library/Caches/*"
   when: user_cache_items.stdout_lines is defined
+  become: true
 
 - name: Empty user Trash (requires sudo)
   shell: "rm -rf {{ ansible_facts['user_dir'] }}/.Trash/*"
