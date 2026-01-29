@@ -225,7 +225,7 @@ homebrew_cask_apps:
 # Variable: mas_installed_apps
 # Description: This variable stores a list of Mac App Store apps to be installed.
 #              Each app is represented by its unique identifier.
-# Example: 
+# Example:
 #   - 497799835  # Xcode
 #   - 803453959  # Slack
 #   - 409183694  # Keynote

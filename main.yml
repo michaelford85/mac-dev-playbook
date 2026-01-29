@@ -21,8 +21,8 @@
     #   ansible.builtin.copy:
     #     content: ""
     #     dest: "/Users/{{ ansible_user_id }}/.zprofile"
-    #     force: false    
-        
+    #     force: false
+
     # - name: Ensure brew path in ~/.zprofile
     #   ansible.builtin.lineinfile:
     #     state: present
@@ -107,7 +107,7 @@
       become: true
       become_user: "{{ ansible_user_id }}"
       tags: ['homebrew']
-    
+
     - name: Install Work Mac-only Homebrew casks
       community.general.homebrew_cask:
         name: "{{ item }}"
