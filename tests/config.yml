@@ -1,4 +1,5 @@
 ---
+configure_osx: false
 
 dock_dockutil_path: /opt/homebrew/bin/dockutil
 dock_dockitems_erase_all: true
