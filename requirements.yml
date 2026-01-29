@@ -18,4 +18,3 @@ collections:
   - name: wayofdev.macops
     type: git
     source: https://github.com/wayofdev/ansible-collection-macops.git
-    
