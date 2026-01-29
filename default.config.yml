@@ -229,19 +229,10 @@ homebrew_cask_apps:
 #   - 497799835  # Xcode
 #   - 803453959  # Slack
 #   - 409183694  # Keynote
-mas_installed_apps:
-  - {id: 302584613, name: "Kindle"}
-  - {id: 1295203466, name: "Microsoft Remote Desktop"}
-  - {id: 462054704, name: "Microsoft Word"}
-  - {id: 462058435, name: "Microsoft Excel"}
-  - {id: 409203825, name: "Numbers"}
-  - {id: 409201541, name: "Pages"}
-  - {id: 1276493162, name: "reMarkable"}
-  - {id: 1230249825, name: "VMware Remote Console"}
-  - {id: 1451685025, name: "WireGuard"}
+mas_installed_apps: []
 
 # This variable controls whether all Mac App Store apps should be upgraded.
-mas_upgrade_all_apps: true
+mas_upgrade_all_apps: false
 
 # The URL of the repository containing the dotfiles.
 dotfiles_repo: "https://github.com/michaelford85/dotfiles.git"
