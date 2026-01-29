@@ -24,7 +24,7 @@
 - name: Delete system caches (requires sudo)
   become: true
   shell: rm -rf /Library/Caches/*
-  ignore_errors: true 
+  ignore_errors: true
 
 - name: Delete user logs
   shell: rm -rf {{ ansible_facts['user_dir'] }}/Library/Logs/*

@@ -1,4 +1,3 @@
-
 # Task: Copy AWS VM SSH keys to ~/.ssh/
 # This task copies the AWS VM SSH keys from the specified source directory to the ~/.ssh/ directory on the target machine.
 # The keys are copied with the specified owner, group, and mode permissions.
@@ -78,3 +77,4 @@
 - name: Display GitHub SSH authentication message
   ansible.builtin.debug:
     msg: "{{ github_ssh_test.stderr }}"
+
