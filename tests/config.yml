@@ -1,7 +1,13 @@
 ---
+
+dock_dockutil_path: /opt/homebrew/bin/dockutil
+dock_dockitems_erase_all: true
+dock_dockutil_install: false
+
 homebrew_installed_packages:
   - autoconf
   - bash-completion
+  - dockutil
   - gettext
   - sqlite
   - ssh-copy-id

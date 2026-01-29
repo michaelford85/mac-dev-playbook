@@ -77,4 +77,3 @@
 - name: Display GitHub SSH authentication message
   ansible.builtin.debug:
     msg: "{{ github_ssh_test.stderr }}"
-
