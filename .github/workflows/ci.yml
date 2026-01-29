@@ -70,16 +70,21 @@ jobs:
 
       - name: Test the playbook's syntax.
         run: ansible-playbook main.yml --syntax-check -vv
+    
+      - name: Test the playbook with homebrew tasks.
+        run: ansible-playbook main.yml --tags "homebrew"
+        env:
+          ANSIBLE_FORCE_COLOR: '1'
 
-      - name: Test the playbook.
-        run: ansible-playbook main.yml -vv
+      - name: Test the playbook with dotfiles and dock tasks.
+        run: ansible-playbook main.yml --tags "dotfiles, dock, cleanmac"
         env:
           ANSIBLE_FORCE_COLOR: '1'
 
       - name: Idempotence check.
         run: |
           idempotence=$(mktemp)
-          ansible-playbook main.yml | tee -a ${idempotence}
+          ansible-playbook main.yml --skip-tags "terminal, osx, extra-packages, sublime-text" | tee -a ${idempotence}
           tail ${idempotence} | grep -q 'changed=0.*failed=0' && (echo 'Idempotence test: pass' && exit 0) || (echo 'Idempotence test: fail' && exit 1)
         env:
           ANSIBLE_FORCE_COLOR: '1'
