@@ -31,4 +31,5 @@
     name: ansible-core
     version: "{{ ansible_version_mac }}"
     virtualenv: "{{ home_path }}/venvs/ansible"
-  when: ansible_core_check.rc != 0
+    state: present
+  # when: ansible_core_check.rc != 0    
