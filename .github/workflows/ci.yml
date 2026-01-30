@@ -86,10 +86,10 @@ jobs:
           idempotence=$(mktemp)
 
           # First run: allow changes
-          ansible-playbook main.yml -vv --skip-tags "terminal, osx dock, extra-packages, sublime-text" | tee -a ${idempotence}
+          ansible-playbook main.yml -vv --skip-tags "terminal, osx, dock, extra-packages, sublime-text" | tee -a ${idempotence}
 
           # Second run: must be idempotent
-          ansible-playbook main.yml -vv --skip-tags "terminal, dock, osx, extra-packages, sublime-text" | tee -a ${idempotence}
+          ansible-playbook main.yml -vv --skip-tags "terminal, osx, dock, extra-packages, sublime-text" | tee -a ${idempotence}
 
           tail ${idempotence} | grep -q 'changed=0.*failed=0' \
             && (echo 'Idempotence test: pass' && exit 0) \
