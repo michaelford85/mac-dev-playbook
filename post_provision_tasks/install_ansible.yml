@@ -16,15 +16,23 @@
   register: ansible_venv_stat
 
 - name: Create ansible Virtual Environment if it does not exist
-  ansible.builtin.shell:
-    cmd: "python3 -m venv {{ home_path }}/venvs/ansible"
-  when: not ansible_venv_stat.stat.exists
+  ansible.builtin.command: "python3 -m venv {{ home_path }}/venvs/ansible"
+  args:
+    creates: "{{ home_path }}/venvs/ansible/bin/activate"
+# - name: Create ansible Virtual Environment if it does not exist
+#   ansible.builtin.shell:
+#     cmd: "python3 -m venv {{ home_path }}/venvs/ansible"
+#   when: not ansible_venv_stat.stat.exists
 
 - name: Check if ansible-core is installed in the venv
-  ansible.builtin.shell:
-    cmd: "{{ home_path }}/venvs/ansible/bin/pip show ansible-core"
+  ansible.builtin.command: "{{ home_path }}/venvs/ansible/bin/pip show ansible-core"
   register: ansible_core_check
   ignore_errors: true
+  changed_when: false
+  # ansible.builtin.shell:
+  #   cmd: "{{ home_path }}/venvs/ansible/bin/pip show ansible-core"
+  # register: ansible_core_check
+  # ignore_errors: true
 
 - name: Install Ansible in the virtual environment if not present
   ansible.builtin.pip:
