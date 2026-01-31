@@ -17,23 +17,28 @@
 - name: Empty user Trash (requires sudo)
   shell: "rm -rf {{ ansible_facts['user_dir'] }}/.Trash/*"
   become: true
+  changed_when: false
 
 - name: Remove .dmg files from Downloads
   shell: "find {{ ansible_facts['user_dir'] }}/Downloads -type f -name '*.dmg' -delete"
   when: clean_dmg_files
+  changed_when: false
 
 - name: Delete system caches (requires sudo)
   become: true
   shell: rm -rf /Library/Caches/*
   ignore_errors: true
+  changed_when: false
 
 - name: Delete user logs
   shell: rm -rf {{ ansible_facts['user_dir'] }}/Library/Logs/*
   ignore_errors: true
+  changed_when: false
 
 - name: Flush DNS cache
   become: true
   command: dscacheutil -flushcache && killall -HUP mDNSResponder
+  changed_when: false
 
 - name: Clear QuickLook cache
   command: qlmanage -r cache
@@ -57,6 +62,7 @@
     state: absent
   loop: "{{ old_logs.files }}"
   when: clean_old_system_logs
+  changed_when: false
 
 - name: Run brew cleanup for formulae
   command: "brew cleanup --prune={{ homebrew_old_version_retention_days }} formula"
