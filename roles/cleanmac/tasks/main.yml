@@ -13,6 +13,7 @@
   ansible.builtin.shell: "shopt -s dotglob && rm -rf {{ ansible_facts['user_dir'] }}/Library/Caches/*"
   when: user_cache_items.stdout_lines is defined
   become: true
+  changed_when: false
 
 - name: Empty user Trash (requires sudo)
   shell: "rm -rf {{ ansible_facts['user_dir'] }}/.Trash/*"
@@ -66,13 +67,16 @@
 
 - name: Run brew cleanup for formulae
   command: "brew cleanup --prune={{ homebrew_old_version_retention_days }} formula"
+  changed_when: false
 
 - name: Run brew cleanup for casks
   command: "brew cleanup --prune={{ homebrew_old_version_retention_days }} cask"
+  changed_when: false
 
 - name: Force remove Homebrew cache (even latest)
   shell: rm -rf "$(brew --cache)"
   when: force_clean_homebrew_cache
+  changed_when: false
 
 - name: Reindex Spotlight search on main volume
   become: true
