@@ -9,3 +9,4 @@ collections*
 config.yml
 config_*
 inventory
+.ansible/

@@ -1,6 +1,17 @@
 ---
 exclude_paths:
-  - roles/elliotweiser.osx-command-line-tools
+  # - roles/elliotweiser.osx-command-line-tools
+  # - roles/ansible-role-dock
+  - .github/workflows/stale.yml
+  - .github/workflows/ci.yml
+  - config.yml
+  - config_work.yml
+  - config_personal.yml
+  - collections/
+  - roles/ansible-role-dock/
+  - roles/geerlingguy.dotfiles/
+  - roles/elliotweiser.osx-command-line-tools/
+  - roles/homebrew/
 
 skip_list:
   - schema[meta]
@@ -11,3 +22,6 @@ skip_list:
   - no-changed-when
   - risky-file-permissions
   - yaml
+  - var-naming[no-role-prefix]
+  - meta-incorrect
+  - ignore-errors

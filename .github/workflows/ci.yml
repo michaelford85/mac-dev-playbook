@@ -29,10 +29,10 @@ jobs:
       - name: Install test dependencies.
         run: pip3 install yamllint ansible ansible-lint
 
-      # - name: Lint code.
-      #   run: |
-      #     yamllint .
-      #     ansible-lint
+      - name: Lint code.
+        run: |
+          yamllint .
+          ansible-lint
 
   integration:
     name: Integration
@@ -81,19 +81,19 @@ jobs:
         env:
           ANSIBLE_FORCE_COLOR: '1'
 
-      # - name: Idempotence check.
-      #   run: |
-      #     idempotence=$(mktemp)
+      - name: Idempotence check.
+        run: |
+          idempotence=$(mktemp)
 
-      #     # First run: allow changes
-      #     ansible-playbook main.yml -vv --skip-tags "terminal, osx, dock, extra-packages, sublime-text" | tee -a ${idempotence}
+          # First run: allow changes
+          ansible-playbook main.yml -vv --skip-tags "terminal, osx, dock, extra-packages, sublime-text" | tee -a ${idempotence}
 
-      #     # Second run: must be idempotent
-      #     ansible-playbook main.yml -vv --skip-tags "terminal, osx, dock, extra-packages, sublime-text" | tee -a ${idempotence}
+          # Second run: must be idempotent
+          ansible-playbook main.yml -vv --skip-tags "terminal, osx, dock, extra-packages, sublime-text" | tee -a ${idempotence}
 
-      #     tail ${idempotence} | grep -q 'changed=0.*failed=0' \
-      #       && (echo 'Idempotence test: pass' && exit 0) \
-      #       || (echo 'Idempotence test: fail' && exit 1)
-      #   env:
-      #     ANSIBLE_FORCE_COLOR: '1'
+          tail ${idempotence} | grep -q 'changed=0.*failed=0' \
+            && (echo 'Idempotence test: pass' && exit 0) \
+            || (echo 'Idempotence test: fail' && exit 1)
+        env:
+          ANSIBLE_FORCE_COLOR: '1'
 
