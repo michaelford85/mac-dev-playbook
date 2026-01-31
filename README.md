@@ -198,7 +198,7 @@ A complete from-scratch macOS setup guide is available here:
 
 ## Testing the Playbook
 
-Many people have asked me if I often wipe my entire workstation and start from scratch just to test changes to the playbook. Nope! This project is [continuously tested on GitHub Actions' macOS infrastructure](https://github.com/michaelford85/mac-dev-playbook/actions?query=workflow%3ACI).
+This project is [continuously tested on GitHub Actions' macOS infrastructure](https://github.com/michaelford85/mac-dev-playbook/actions?query=workflow%3ACI).
 
 
 You can also run macOS itself inside a VM, for at least some of the required testing (App Store apps and some proprietary software might not install properly). I currently recommend:
@@ -215,7 +215,7 @@ This project is continuously tested on GitHub Actions macOS runners.
 
 ## Author
 
-This project was originally created by [Jeff Geerling](https://www.jeffgeerling.com/) (originally inspired by [MWGriffin/ansible-playbooks](https://github.com/MWGriffin/ansible-playbooks)).
+This project was originally created by [Jeff Geerling](https://www.jeffgeerling.com/) (with inspiration from [MWGriffin/ansible-playbooks](https://github.com/MWGriffin/ansible-playbooks)).
 
 [badge-gh-actions]: https://github.com/michaelford85/mac-dev-playbook/actions/workflows/ci.yml/badge.svg?branch=master
 [link-gh-actions]:  https://github.com/michaelford85/mac-dev-playbook/actions/workflows/ci.yml
