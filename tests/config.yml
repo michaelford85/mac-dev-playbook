@@ -21,3 +21,11 @@ homebrew_installed_packages:
 homebrew_cask_apps:
   - firefox
   - licecap
+
+composer_packages: []
+
+npm_packages: []
+
+pip_packages: []
+
+gem_packages: []
