@@ -17,25 +17,25 @@
         - "{{ playbook_dir }}/config.yml"
       tags: ['always']
 
-    # - name: Ensure .zprofile exists
-    #   ansible.builtin.copy:
-    #     content: ""
-    #     dest: "/Users/{{ ansible_user_id }}/.zprofile"
-    #     force: false
+  # - name: Ensure .zprofile exists
+  #   ansible.builtin.copy:
+  #     content: ""
+  #     dest: "/Users/{{ ansible_user_id }}/.zprofile"
+  #     force: false
 
-    # - name: Ensure brew path in ~/.zprofile
-    #   ansible.builtin.lineinfile:
-    #     state: present
-    #     path: "/Users/{{ ansible_user_id }}/.zprofile"
-    #     line: eval "$({{ (ansible_machine == 'arm64') | ternary('/opt/homebrew', '/usr/local') }}/bin/brew shellenv)"
-    #   tags: ['homebrew']
+  # - name: Ensure brew path in ~/.zprofile
+  #   ansible.builtin.lineinfile:
+  #     state: present
+  #     path: "/Users/{{ ansible_user_id }}/.zprofile"
+  #     line: eval "$({{ (ansible_machine == 'arm64') | ternary('/opt/homebrew', '/usr/local') }}/bin/brew shellenv)"
+  #   tags: ['homebrew']
 
-    # - name: Ensure dock path in ~/.zprofile
-    #   ansible.builtin.lineinfile:
-    #     state: present
-    #     path: "/Users/{{ ansible_user_id }}/.zprofile"
-    #     line: eval "$({{ (ansible_machine == 'arm64') | ternary('/opt/homebrew', '/usr/local') }}/bin/dockutil shellenv)"
-    #   tags: ['dock']
+  # - name: Ensure dock path in ~/.zprofile
+  #   ansible.builtin.lineinfile:
+  #     state: present
+  #     path: "/Users/{{ ansible_user_id }}/.zprofile"
+  #     line: eval "$({{ (ansible_machine == 'arm64') | ternary('/opt/homebrew', '/usr/local') }}/bin/dockutil shellenv)"
+  #   tags: ['dock']
 
   roles:
     - role: elliotweiser.osx-command-line-tools
@@ -46,8 +46,9 @@
       when: configure_dotfiles
       tags: ['dotfiles']
     - role: geerlingguy.mac.mas
-      when:
-      - (mas_installed_apps | default([]) | length > 0) or (mas_installed_app_ids | default([]) | length > 0)
+      when: >
+        (mas_installed_apps | default([]) | length > 0) or
+        (mas_installed_app_ids | default([]) | length > 0)
       tags: ['mas']
     - role: ansible-role-dock
       when: configure_dock

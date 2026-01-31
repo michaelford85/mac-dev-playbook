@@ -172,8 +172,8 @@ homebrew_installed_packages:
 # Description: A list of Homebrew taps to be installed.
 # Default value: []
 homebrew_taps: []
-  # - homebrew/core
-  # - homebrew/cask
+# - homebrew/core
+# - homebrew/cask
 
 # Variable: homebrew_cask_apps
 # Description: This variable is used to specify a list of Homebrew Cask applications to be installed.
