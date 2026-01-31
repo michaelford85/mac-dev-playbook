@@ -217,6 +217,6 @@ This project is continuously tested on GitHub Actions macOS runners.
 
 This project was originally created by [Jeff Geerling](https://www.jeffgeerling.com/) (originally inspired by [MWGriffin/ansible-playbooks](https://github.com/MWGriffin/ansible-playbooks)).
 
-[badge-gh-actions]: https://github.com/michaelford85/mac-dev-playbook/workflows/CI/badge.svg?event=push
-[link-gh-actions]: https://github.com/michaelford85/mac-dev-playbook/actions?query=workflow%3ACI
+[badge-gh-actions]: https://github.com/michaelford85/mac-dev-playbook/actions/workflows/ci.yml/badge.svg?branch=master
+[link-gh-actions]:  https://github.com/michaelford85/mac-dev-playbook/actions/workflows/ci.yml
 
