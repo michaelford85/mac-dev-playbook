@@ -33,7 +33,7 @@ Before starting, I completed Apple's mandatory macOS setup wizard (creating a lo
     - Make the playbook query you for the become password when running the main.yml file, with the argument `--ask-become-pass`
     - Specify the `ansible_become_password` variable in the `config.yml` file.
     - If you are running the playbook on multiple macs, and they have different passwords, you can set the inventory variable `ansible_become_pass`.
-  - Make the following role tweaks:
+  <!-- - Make the following role tweaks:
     - **<repository root>/roles/geerlingguy.dotfiles/tasks/main.yml**:
       - For the task `Ensure dotfiles repository is cloned locally`, add `force: true` to the git module arguments.
         - ```
@@ -58,12 +58,13 @@ Before starting, I completed Apple's mandatory macOS setup wizard (creating a lo
               #   when: dock_dockitems_to_remove is defined and (dock_dockitems_to_remove | length > 0)
               #   tags:
               #     - dock-remove
-          ``` 
+          ```  -->
             
 
 ### Automated Installations
 
-- Ensure that config.yml is in the cloned repository, sourced from Dropbox.
+- Ensure that `config.yml` and `inventory` is in the cloned repository, sourced from Dropbox:
+    `/Dropbox/My Documents/Macbook Ansible Restore/mac-dev-playbook_config_file`
 - Run the playbook remotely with `--tags homebrew, sudoers --skip-tags "terminal, osx, sublime-text, extra-package, cleanmac"`.
   - `$ ansible-playbook main.yml  --tags "homebrew,sudoers" --skip-tags "terminal, osx, sublime-text, extra-packages, cleanmac"`
   - If there are errors, you may need to finish up other tasks like installing 'old-fashioned' apps first
@@ -72,6 +73,7 @@ Before starting, I completed Apple's mandatory macOS setup wizard (creating a lo
   - [Google Chat](https://chat.google.com/download/) from within Brave Browser
   - [VMWare Fusion Player](https://customerconnect.vmware.com/en/evalcenter?p=fusion-player-personal-13) (dmg file and license are in DropBox)
   - [MakeMKV](https://www.makemkv.com/) (License Key is in 1Password)
+  - [Logi Options Plus](https://www.logitech.com/en-us/software/logi-options-plus.html)
 - Set up Dropbox and sync the following folders:
   - `{{ dropbox_local_path }}/apps/`
   - `{{ dropbox_local_path }}/My Documents/Macbook Ansible Restore/`
